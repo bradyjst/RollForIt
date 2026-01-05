@@ -104,26 +104,41 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 
 	return (
 		<mesh ref={mesh} geometry={geom}>
+			{/* ===================== */}
+			{/* DICE BODY (BLACK) */}
+			{/* ===================== */}
 			<meshPhysicalMaterial
-				color="#ffffff"
-				roughness={0.05}
-				metalness={0.9}
+				color="#0b0b0b"
+				roughness={0.35}
+				metalness={0.6}
 				clearcoat={1}
-				clearcoatRoughness={0.05}
+				clearcoatRoughness={0.15}
 			/>
 
-			<lineBasicMaterial color="#4fd28a" linewidth={2} />
+			{/* ===================== */}
+			{/* EDGE GLOW (BACK LAYER) */}
+			{/* ===================== */}
+			<group scale={1.01}>
+				<lineSegments>
+					<edgesGeometry args={[geom]} />
+					<lineBasicMaterial color="#ff2a2a" transparent opacity={0.4} />
+				</lineSegments>
+			</group>
 
-			{/* edges */}
-			<lineSegments>
+			{/* ===================== */}
+			{/* SHARP EDGES (FRONT) */}
+			{/* ===================== */}
+			{/* <lineSegments>
 				<edgesGeometry args={[geom]} />
-				<lineBasicMaterial color="#000000" />
-			</lineSegments>
+				<lineBasicMaterial color="#ff2a2a" />
+			</lineSegments> */}
 
-			{/* numbers on faces */}
+			{/* ===================== */}
+			{/* FACE NUMBERS (RED GLOW) */}
+			{/* ===================== */}
 			{faces.map((f, idx) => {
-				const pos = f.center.clone().add(f.normal.clone().multiplyScalar(0.06));
 				const faceValue = idx + 1;
+				const pos = f.center.clone().add(f.normal.clone().multiplyScalar(0.06));
 
 				return (
 					<group
@@ -133,11 +148,11 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 					>
 						<Text
 							fontSize={0.28}
-							color="#ff3b3b" // red number
+							color="#ff2a2a"
+							outlineWidth={0.02}
+							outlineColor="#ff2a2a"
 							anchorX="center"
 							anchorY="middle"
-							outlineWidth={0.02} // glow thickness
-							outlineColor="#ff3b3b" // glow color
 						>
 							{faceValue}
 						</Text>
