@@ -12,7 +12,7 @@
 	border-radius: 24px;
 	border: none;
 	display: flex;
-	background: var(--surface);
+	background: transparent;
 	color: var(--text-primary);
 	perspective: 900px;
 	font-size: 96px;
@@ -25,7 +25,7 @@
 }
 
 .dice:hover {
-	background: var(--surface-hover);
+	background: transparent;
 	transform: scale(1.03);
 }
 
