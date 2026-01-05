@@ -103,7 +103,7 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 	}, [rolling, value, faces]);
 
 	return (
-		<mesh ref={mesh} geometry={geom}>
+		<mesh ref={mesh} geometry={geom} scale={1}>
 			{/* ===================== */}
 			{/* DICE BODY (BLACK) */}
 			{/* ===================== */}
@@ -173,10 +173,7 @@ export const D20Three = ({ rolling, value, onLand }: D20ThreeProps) => {
 	return (
 		<Canvas
 			camera={{ position: [0, 0, 10], fov: 45 }}
-			style={{
-				width: "min(80vw, 340px)",
-				height: "min(80vw, 340px)",
-			}}
+			style={{ width: "min(80vw, 70vw)", height: "min(80vw, 70vw)" }}
 		>
 			<ambientLight intensity={0.25} />
 			<directionalLight position={[5, 5, 5]} intensity={1.2} />
