@@ -104,12 +104,15 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 
 	return (
 		<mesh ref={mesh} geometry={geom}>
-			<meshStandardMaterial
+			<meshPhysicalMaterial
 				color="#ffffff"
-				roughness={0.4}
-				metalness={0.2}
-				side={THREE.FrontSide}
+				roughness={0.05}
+				metalness={0.9}
+				clearcoat={1}
+				clearcoatRoughness={0.05}
 			/>
+
+			<lineBasicMaterial color="#4fd28a" linewidth={2} />
 
 			{/* edges */}
 			<lineSegments>
@@ -130,9 +133,11 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 					>
 						<Text
 							fontSize={0.28}
-							color="black"
+							color="#ff3b3b" // red number
 							anchorX="center"
 							anchorY="middle"
+							outlineWidth={0.02} // glow thickness
+							outlineColor="#ff3b3b" // glow color
 						>
 							{faceValue}
 						</Text>
@@ -153,7 +158,7 @@ export const D20Three = ({ rolling, value, onLand }: D20ThreeProps) => {
 	return (
 		<Canvas
 			camera={{ position: [0, 0, 10], fov: 45 }}
-			style={{ width: 500, height: 500 }}
+			style={{ width: 1000, height: 1000 }}
 		>
 			<ambientLight intensity={0.25} />
 			<directionalLight position={[5, 5, 5]} intensity={1.2} />
