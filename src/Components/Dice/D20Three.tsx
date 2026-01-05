@@ -104,9 +104,6 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 
 	return (
 		<mesh ref={mesh} geometry={geom} scale={1}>
-			{/* ===================== */}
-			{/* DICE BODY (BLACK) */}
-			{/* ===================== */}
 			<meshPhysicalMaterial
 				color="#0b0b0b"
 				roughness={0.35}
@@ -115,9 +112,6 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 				clearcoatRoughness={0.15}
 			/>
 
-			{/* ===================== */}
-			{/* EDGE GLOW (BACK LAYER) */}
-			{/* ===================== */}
 			<group scale={1.01}>
 				<lineSegments>
 					<edgesGeometry args={[geom]} />
@@ -125,17 +119,6 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 				</lineSegments>
 			</group>
 
-			{/* ===================== */}
-			{/* SHARP EDGES (FRONT) */}
-			{/* ===================== */}
-			{/* <lineSegments>
-				<edgesGeometry args={[geom]} />
-				<lineBasicMaterial color="#ff2a2a" />
-			</lineSegments> */}
-
-			{/* ===================== */}
-			{/* FACE NUMBERS (RED GLOW) */}
-			{/* ===================== */}
 			{faces.map((f, idx) => {
 				const faceValue = idx + 1;
 				const pos = f.center.clone().add(f.normal.clone().multiplyScalar(0.06));
