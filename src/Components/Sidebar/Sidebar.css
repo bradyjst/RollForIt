@@ -5,8 +5,9 @@
 	border-radius: 20px;
 	width: 280px;
 	padding: 24px;
-	margin-right: 5rem;
+
 	margin-bottom: 5rem;
 	gap: 32px;
 	border-left: 1px solid #1f1f2f;
+	text-align: center;
 }

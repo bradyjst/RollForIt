@@ -173,7 +173,10 @@ export const D20Three = ({ rolling, value, onLand }: D20ThreeProps) => {
 	return (
 		<Canvas
 			camera={{ position: [0, 0, 10], fov: 45 }}
-			style={{ width: 1000, height: 1000 }}
+			style={{
+				width: "min(80vw, 340px)",
+				height: "min(80vw, 340px)",
+			}}
 		>
 			<ambientLight intensity={0.25} />
 			<directionalLight position={[5, 5, 5]} intensity={1.2} />

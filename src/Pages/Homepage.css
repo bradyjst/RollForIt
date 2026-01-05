@@ -6,7 +6,15 @@
 
 .homepage-content {
 	flex: 1;
-	display: grid;
-	grid-template-columns: 1fr auto;
+	display: flex;
+	justify-content: center;
 	align-items: center;
+}
+
+@media (max-width: 1000px) {
+	.homepage-content {
+		flex-direction: column;
+		align-items: center;
+		gap: 24px;
+	}
 }
