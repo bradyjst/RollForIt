@@ -1,0 +1,37 @@
+:root {
+	/* Backgrounds */
+	--bg: #0b0f1a; /* deep midnight */
+	--surface: #151a2e; /* dark indigo */
+	--surface-hover: #1f2450; /* hover glow base */
+
+	/* Text */
+	--text-primary: #eaf0ff;
+	--text-secondary: #b3baf5;
+	--text-muted: #7a83c9;
+
+	/* Accent */
+	--accent: #7b6cff; /* neon purple */
+	--accent-soft: #4cc9f0; /* neon cyan */
+
+	/* Borders */
+	--border: #2a2f6f;
+}
+
+a {
+	font-weight: 500;
+	color: #646cff;
+	text-decoration: inherit;
+}
+a:hover {
+	color: #535bf2;
+}
+
+body {
+	background: var(--bg);
+	color: var(--text-primary);
+}
+
+h1 {
+	font-size: 3.2em;
+	line-height: 1.1;
+}

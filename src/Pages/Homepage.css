@@ -1,0 +1,12 @@
+.homepage-container {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.homepage-content {
+	flex: 1;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+}

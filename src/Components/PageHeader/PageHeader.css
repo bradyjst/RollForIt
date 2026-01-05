@@ -1,0 +1,22 @@
+.page-header {
+	width: 100%;
+	padding: 1rem 0rem;
+	text-align: center;
+}
+
+.page-header-container {
+	max-width: 900px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.page-header-container h1 {
+	font-size: clamp(2.2rem, 4vw, 3rem);
+	margin-bottom: 1rem;
+	color: var(--surface #151521);
+}
+
+.page-header-container p {
+	font-size: 1.1rem;
+	color: #555;
+}

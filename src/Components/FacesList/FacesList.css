@@ -1,0 +1,38 @@
+.faces-grid {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	gap: 6px 12px;
+}
+
+.face-item {
+	font-size: 14px;
+	opacity: 0.4;
+	transition: opacity 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.face-item.active {
+	opacity: 1;
+	color: var(--accent);
+	font-weight: 700;
+}
+
+.face-item.landed {
+	animation: face-pop 350ms ease-out;
+}
+
+@keyframes face-pop {
+	0% {
+		transform: scale(1);
+	}
+	40% {
+		transform: scale(1.35);
+		text-shadow: 0 0 12px var(--accent-soft);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
