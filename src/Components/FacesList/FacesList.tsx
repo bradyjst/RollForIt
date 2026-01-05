@@ -14,8 +14,9 @@ export const FacesList = ({ faces, activeValue }: FacesListProps) => {
 					key={face.value}
 					className={`face-row ${face.value === activeValue ? "active" : ""}`}
 				>
-					<div className="face-number">{face.value}</div>
-					<div className="face-text">{face.text}</div>
+					<div className="face-number">
+						{face.value}. {face.text}
+					</div>
 				</div>
 			))}
 		</div>

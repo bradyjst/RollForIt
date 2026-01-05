@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { PageHeader } from "../Components/PageHeader/PageHeader";
 import { Dice } from "../Components/Dice/Dice";
 import { Sidebar } from "../Components/Sidebar/Sidebar";
-import "./HomePage.css";
+import "./Homepage.css";
 
 export const Homepage = () => {
 	const [roll, setRoll] = useState<number | null>(null); // truth
