@@ -8,17 +8,17 @@ type FacesListProps = {
 
 export const FacesList = ({ faces, activeValue }: FacesListProps) => {
 	return (
-		<div className="faces-list">
+		<ul className="faces-grid">
 			{faces.map((face) => (
-				<div
+				<li
 					key={face.value}
-					className={`face-row ${face.value === activeValue ? "active" : ""}`}
+					className={`face-item ${
+						face.value === activeValue ? "active landed" : ""
+					}`}
 				>
-					<div className="face-number">
-						{face.value}. {face.text}
-					</div>
-				</div>
+					{face.value}. {face.text}
+				</li>
 			))}
-		</div>
+		</ul>
 	);
 };

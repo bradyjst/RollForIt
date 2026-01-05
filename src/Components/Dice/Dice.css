@@ -11,16 +11,16 @@
 	height: 40rem;
 	border-radius: 24px;
 	border: none;
-
+	display: flex;
 	background: var(--surface);
 	color: var(--text-primary);
 	perspective: 900px;
 	font-size: 96px;
 	font-weight: 900;
-
+	justify-content: center;
+	align-items: center;
 	cursor: pointer;
 	user-select: none;
-
 	transition: transform 0.12s ease, background 0.15s ease;
 }
 

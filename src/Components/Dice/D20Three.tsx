@@ -6,24 +6,28 @@ import * as THREE from "three";
 type D20MeshProps = {
 	rolling: boolean;
 	value: number | null;
+	onLand?: () => void;
 };
 
 type FaceInfo = {
 	center: THREE.Vector3;
 	normal: THREE.Vector3;
-	quat: THREE.Quaternion; // orient text so its +Z points along face normal
+	quat: THREE.Quaternion;
 };
 
-const D20Mesh = ({ rolling, value }: D20MeshProps) => {
+const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 	const mesh = useRef<THREE.Mesh>(null!);
 	const targetQuat = useRef<THREE.Quaternion | null>(null);
+
+	const spinTime = useRef(0);
+	const SPIN_DURATION = 1; // seconds
 
 	// Build geometry once
 	const geom = useMemo(() => new THREE.IcosahedronGeometry(1.2, 0), []);
 
-	// Derive the 20 face centers + normals FROM THE GEOMETRY (no guessing)
+	// Derive face centers + normals from geometry
 	const faces = useMemo<FaceInfo[]>(() => {
-		const g = geom.toNonIndexed(); // easiest: every 3 verts is a triangle face
+		const g = geom.toNonIndexed();
 		const pos = g.getAttribute("position") as THREE.BufferAttribute;
 
 		const out: FaceInfo[] = [];
@@ -41,13 +45,11 @@ const D20Mesh = ({ rolling, value }: D20MeshProps) => {
 				.add(vC)
 				.multiplyScalar(1 / 3);
 
-			// normal = (B-A) x (C-A)
 			const normal = new THREE.Vector3()
 				.subVectors(vB, vA)
 				.cross(new THREE.Vector3().subVectors(vC, vA))
 				.normalize();
 
-			// Orient text so its local +Z faces outward along the face normal
 			const quat = new THREE.Quaternion().setFromUnitVectors(
 				new THREE.Vector3(0, 0, 1),
 				normal
@@ -56,50 +58,52 @@ const D20Mesh = ({ rolling, value }: D20MeshProps) => {
 			out.push({ center, normal, quat });
 		}
 
-		// Safety: Icosahedron should yield exactly 20 faces
 		return out.slice(0, 20);
 	}, [geom]);
 
-	useFrame(() => {
+	useFrame((_, delta) => {
 		if (!mesh.current) return;
 
-		if (rolling) {
-			mesh.current.rotation.x += 0.15;
-			mesh.current.rotation.y += 0.18;
-			mesh.current.rotation.z += 0.12;
+		// Phase 1: visible spin
+		if (rolling && spinTime.current < SPIN_DURATION) {
+			spinTime.current += delta;
+
+			mesh.current.rotation.x += 6 * delta;
+			mesh.current.rotation.y += 7 * delta;
+			mesh.current.rotation.z += 5 * delta;
 			return;
 		}
 
-		if (!targetQuat.current) return;
+		// Phase 2: snap to target face
+		if (targetQuat.current) {
+			mesh.current.quaternion.slerp(targetQuat.current, 0.15);
 
-		mesh.current.quaternion.slerp(targetQuat.current, 0.2);
-
-		if (mesh.current.quaternion.angleTo(targetQuat.current) < 0.01) {
-			mesh.current.quaternion.copy(targetQuat.current);
-			targetQuat.current = null;
+			if (mesh.current.quaternion.angleTo(targetQuat.current) < 0.05) {
+				mesh.current.quaternion.copy(targetQuat.current);
+				targetQuat.current = null;
+				onLand?.(); // ✅ TRUE landing moment
+			}
 		}
 	});
 
-	// Snap so the chosen face normal points toward the camera (0,0,1)
+	// Set target rotation when a roll starts
 	useEffect(() => {
-		if (rolling || value === null) return;
+		if (!rolling || value === null) return;
 		if (value < 1 || value > 20) return;
+
+		spinTime.current = 0;
 
 		const face = faces[value - 1];
 		if (!face) return;
 
-		// rotate face.normal -> forward
-		const quat = new THREE.Quaternion().setFromUnitVectors(
+		targetQuat.current = new THREE.Quaternion().setFromUnitVectors(
 			face.normal.clone().normalize(),
 			new THREE.Vector3(0, 0, 1)
 		);
-
-		targetQuat.current = quat;
 	}, [rolling, value, faces]);
 
 	return (
 		<mesh ref={mesh} geometry={geom}>
-			{/* body */}
 			<meshStandardMaterial
 				color="#ffffff"
 				roughness={0.4}
@@ -113,12 +117,10 @@ const D20Mesh = ({ rolling, value }: D20MeshProps) => {
 				<lineBasicMaterial color="#000000" />
 			</lineSegments>
 
-			{/* numbers: one per face, positioned ON the actual face */}
+			{/* numbers on faces */}
 			{faces.map((f, idx) => {
-				const faceValue = idx + 1;
-
-				// put label slightly above the face surface
 				const pos = f.center.clone().add(f.normal.clone().multiplyScalar(0.06));
+				const faceValue = idx + 1;
 
 				return (
 					<group
@@ -144,19 +146,20 @@ const D20Mesh = ({ rolling, value }: D20MeshProps) => {
 type D20ThreeProps = {
 	rolling: boolean;
 	value: number | null;
+	onLand?: () => void;
 };
 
-export const D20Three = ({ rolling, value }: D20ThreeProps) => {
+export const D20Three = ({ rolling, value, onLand }: D20ThreeProps) => {
 	return (
 		<Canvas
-			camera={{ position: [2.5, 2.5, 4], fov: 45 }}
-			style={{ width: 240, height: 240 }}
+			camera={{ position: [0, 0, 10], fov: 45 }}
+			style={{ width: 500, height: 500 }}
 		>
 			<ambientLight intensity={0.25} />
 			<directionalLight position={[5, 5, 5]} intensity={1.2} />
 			<directionalLight position={[-3, -3, 2]} intensity={0.4} />
 
-			<D20Mesh rolling={rolling} value={value} />
+			<D20Mesh rolling={rolling} value={value} onLand={onLand} />
 		</Canvas>
 	);
 };
