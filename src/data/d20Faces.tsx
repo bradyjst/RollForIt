@@ -32,7 +32,7 @@ export const DATE_NIGHT_FACES = [
 	{ value: 3, text: "Cook Together 👩‍🍳👨‍🍳" },
 	{ value: 4, text: "Takeout + Couch 🛋️" },
 	{ value: 5, text: "Dessert Date 🍰" },
-	{ value: 6, text: "Walk & Talk 🚶‍♂️🚶‍♀️" },
+	{ value: 6, text: "Scenic Walk 🚶‍♂️🚶‍♀️" },
 	{ value: 7, text: "Game Night 🎲" },
 	{ value: 8, text: "Drinks at a Bar 🍸" },
 	{ value: 9, text: "Coffee Date ☕" },
