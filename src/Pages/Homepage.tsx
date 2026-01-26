@@ -52,6 +52,7 @@ export const Homepage = () => {
 					lastRoll={roll}
 					totalRolls={totalRolls}
 					landedRoll={landedRoll}
+					rollDice={rollDice}
 				/>
 			</div>
 

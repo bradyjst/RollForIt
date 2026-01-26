@@ -11,11 +11,12 @@ type SidebarProps = {
 	lastRoll: number | null;
 	totalRolls: number;
 	landedRoll: number | null;
+	rollDice: () => void;
 };
 
 type ListMode = "food" | "date" | "movies" | "custom";
 
-export const Sidebar = ({ landedRoll }: SidebarProps) => {
+export const Sidebar = ({ landedRoll, rollDice }: SidebarProps) => {
 	const [mode, setMode] = useState<ListMode>("food");
 	const [currentList, setCurrentList] = useState<D20Face[]>(D20_FACES);
 	const [animating, setAnimating] = useState<"out" | "in" | null>(null);
@@ -107,7 +108,9 @@ export const Sidebar = ({ landedRoll }: SidebarProps) => {
 					Custom 🎲
 				</button>
 			</div>
-
+			<button className="reset-button" onClick={rollDice}>
+				Roll Dice
+			</button>
 			<div
 				className={`faces-carousel ${
 					animating === "out"
@@ -125,7 +128,7 @@ export const Sidebar = ({ landedRoll }: SidebarProps) => {
 					onEdit={updateCustomItem}
 					nearMe={
 						mode === "food"
-							? { enabled: true }
+							? { enabled: true, exclude: ["reroll"] }
 							: mode === "date"
 							? {
 									enabled: true,
