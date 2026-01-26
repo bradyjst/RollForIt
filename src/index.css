@@ -17,6 +17,12 @@
 	--border: #2a2f6f;
 }
 
+html,
+body {
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
 a {
 	font-weight: 500;
 	color: #646cff;
