@@ -9,7 +9,19 @@ type FacesListProps = {
 	editable?: boolean;
 	onEdit?: (index: number, value: string) => void;
 	onAdd?: () => void;
+	nearMe?: {
+		enabled: boolean;
+		exclude?: string[];
+	};
 };
+
+function buildMapsUrl(text: string) {
+	const cleaned = text.replace(/[^\p{L}\p{N}\s]/gu, "").trim();
+
+	return `https://www.google.com/maps/search/${encodeURIComponent(
+		`${cleaned} near me`
+	)}`;
+}
 
 export const FacesList = ({
 	faces,
@@ -17,6 +29,7 @@ export const FacesList = ({
 	editable = false,
 	onEdit,
 	onAdd,
+	nearMe,
 }: FacesListProps) => {
 	const [editingIndex, setEditingIndex] = useState<number | null>(null);
 	const [draft, setDraft] = useState("");
@@ -26,6 +39,14 @@ export const FacesList = ({
 			{faces.map((face, index) => {
 				const isActive = activeValue === face.value;
 				const isEditing = editingIndex === index;
+
+				const textLower = face.text.toLowerCase();
+				const isExcluded =
+					nearMe?.exclude?.some((x) => textLower.includes(x.toLowerCase())) ??
+					false;
+
+				const showNearMe =
+					nearMe?.enabled && isActive && !editable && !isExcluded;
 
 				return (
 					<div
@@ -61,13 +82,26 @@ export const FacesList = ({
 								}}
 							/>
 						) : (
-							<span className="face-text">{face.text}</span>
+							<>
+								<span className="face-text">{face.text}</span>
+
+								{showNearMe && (
+									<a
+										className="near-me"
+										href={buildMapsUrl(face.text)}
+										target="_blank"
+										rel="noopener noreferrer"
+										onClick={(e) => e.stopPropagation()}
+									>
+										📍 Near me
+									</a>
+								)}
+							</>
 						)}
 					</div>
 				);
 			})}
 
-			{/* ➕ Add row */}
 			{editable && faces.length < 20 && (
 				<div className="face add-row" onClick={onAdd}>
 					<span className="face-number">+</span>

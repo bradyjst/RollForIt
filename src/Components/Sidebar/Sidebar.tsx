@@ -21,10 +21,11 @@ export const Sidebar = ({ landedRoll }: SidebarProps) => {
 	const [animating, setAnimating] = useState<"out" | "in" | null>(null);
 	const [direction, setDirection] = useState<"left" | "right">("right");
 
-	// 🔧 Custom list = ONLY filled values
+	const EMPTY_CUSTOM = Array(20).fill("");
+
 	const [customItems, setCustomItems] = useState<string[]>(() => {
 		const saved = localStorage.getItem("customDice");
-		return saved ? JSON.parse(saved) : [];
+		return saved ? JSON.parse(saved) : EMPTY_CUSTOM;
 	});
 
 	// derived faces for custom list
@@ -34,8 +35,9 @@ export const Sidebar = ({ landedRoll }: SidebarProps) => {
 	}));
 
 	const resetCustomList = () => {
-		setCustomItems([]);
-		localStorage.removeItem("customDice");
+		const empty = Array(20).fill("");
+		setCustomItems(empty);
+		localStorage.setItem("customDice", JSON.stringify(empty));
 	};
 
 	const switchList = (
@@ -57,31 +59,21 @@ export const Sidebar = ({ landedRoll }: SidebarProps) => {
 		}, 220);
 	};
 
-	// ➕ add new custom option
-	const addCustomItem = () => {
-		if (customItems.length >= 20) return;
-		const next = [...customItems, ""];
-		setCustomItems(next);
-		localStorage.setItem("customDice", JSON.stringify(next));
-	};
-
-	// ✏️ edit custom option
 	const updateCustomItem = (index: number, value: string) => {
 		const next = [...customItems];
 		next[index] = value;
 
-		// remove empty rows
-		const cleaned = next.filter((v) => v.trim() !== "");
-
-		setCustomItems(cleaned);
-		localStorage.setItem("customDice", JSON.stringify(cleaned));
+		setCustomItems(next);
+		localStorage.setItem("customDice", JSON.stringify(next));
 	};
 
 	const facesToShow = mode === "custom" ? customFaces : currentList;
 
+	const nonEmptyFaces = facesToShow.filter((face) => face.text.trim() !== "");
+
 	const mappedActiveValue =
-		landedRoll && facesToShow.length > 0
-			? ((landedRoll - 1) % facesToShow.length) + 1
+		landedRoll && nonEmptyFaces.length > 0
+			? nonEmptyFaces[(landedRoll - 1) % nonEmptyFaces.length].value
 			: null;
 
 	return (
@@ -131,12 +123,22 @@ export const Sidebar = ({ landedRoll }: SidebarProps) => {
 					activeValue={mappedActiveValue}
 					editable={mode === "custom"}
 					onEdit={updateCustomItem}
-					onAdd={addCustomItem}
+					nearMe={
+						mode === "food"
+							? { enabled: true }
+							: mode === "date"
+							? {
+									enabled: true,
+									exclude: ["Takeout + Couch", "Stay In & Chill", "reroll"],
+							  }
+							: { enabled: false }
+					}
 				/>
 
 				{mode === "custom" && (
 					<p>
 						Add less than 20 values and the dice will randomly select a value
+						while keeping equal odds
 					</p>
 				)}
 				{mode === "custom" && customItems.length > 0 && (
