@@ -108,7 +108,7 @@ export const Sidebar = ({ landedRoll, rollDice }: SidebarProps) => {
 					Custom 🎲
 				</button>
 			</div>
-			<button className="reset-button" onClick={rollDice}>
+			<button className="reroll-button mobile-only" onClick={rollDice}>
 				Roll Dice
 			</button>
 			<div

@@ -120,6 +120,18 @@
 	}
 }
 
+/* Hidden by default (desktop) */
+.mobile-only {
+	display: none;
+}
+
+/* Show only on mobile */
+@media (max-width: 1200px) {
+	.mobile-only {
+		display: block;
+	}
+}
+
 .reset-button {
 	background: transparent;
 	border: 1px solid #3a3a55;
@@ -130,6 +142,19 @@
 	font-size: 13px;
 	cursor: pointer;
 	grid-column: span 2;
+	opacity: 0.85;
+	transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.reroll-button {
+	background: transparent;
+	border: 1px solid #3a3a55;
+	color: #aaa;
+	margin-top: 0;
+	height: 60px;
+	border-radius: 10px;
+	font-size: 20px;
+	cursor: pointer;
 	opacity: 0.85;
 	transition: background 0.15s ease, opacity 0.15s ease;
 }
