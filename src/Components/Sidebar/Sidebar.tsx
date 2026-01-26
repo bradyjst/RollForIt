@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { Stats } from "../Stats/Stats";
 import { FacesList } from "../FacesList/FacesList";
-
 import { D20_FACES } from "../../data/d20Faces";
 import { DATE_NIGHT_FACES } from "../../data/d20Faces";
 import { MOVIE_GENRE_FACES } from "../../data/d20Faces";
@@ -17,7 +15,7 @@ type SidebarProps = {
 
 type ListMode = "food" | "date" | "movies" | "custom";
 
-export const Sidebar = ({ lastRoll, totalRolls, landedRoll }: SidebarProps) => {
+export const Sidebar = ({ landedRoll }: SidebarProps) => {
 	const [mode, setMode] = useState<ListMode>("food");
 	const [currentList, setCurrentList] = useState<D20Face[]>(D20_FACES);
 	const [animating, setAnimating] = useState<"out" | "in" | null>(null);
@@ -88,8 +86,6 @@ export const Sidebar = ({ lastRoll, totalRolls, landedRoll }: SidebarProps) => {
 
 	return (
 		<aside className="sidebar">
-			<Stats lastRoll={lastRoll} totalRolls={totalRolls} />
-
 			<div className="list-buttons">
 				<button
 					className={mode === "food" ? "active" : ""}

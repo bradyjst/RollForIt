@@ -1,8 +1,9 @@
 .stats {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	justify-content: center;
 	gap: 12px;
-	background: #151521;
+	background: transparent;
 	border-radius: 20px;
 	padding: 16px 18px;
 }

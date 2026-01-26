@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { PageHeader } from "../Components/PageHeader/PageHeader";
+import { Stats } from "../Components/Stats/Stats";
 import { Dice } from "../Components/Dice/Dice";
 import { Sidebar } from "../Components/Sidebar/Sidebar";
 import { CustomListModal } from "../Components/Modal/Modal";
@@ -37,6 +38,7 @@ export const Homepage = () => {
 	return (
 		<div className="homepage-container">
 			<PageHeader title="Roll For It!" />
+			<Stats totalRolls={totalRolls} />
 
 			<div className="homepage-content">
 				<Dice
