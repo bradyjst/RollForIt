@@ -2,6 +2,7 @@
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	overflow-y: auto;
 }
 
 .homepage-content {
@@ -9,7 +10,6 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	overflow-y: auto;
 }
 
 @media (max-width: 1200px) {
