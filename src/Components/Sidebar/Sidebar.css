@@ -5,9 +5,128 @@
 	border-radius: 20px;
 	width: 280px;
 	padding: 24px;
-
 	margin-bottom: 5rem;
 	gap: 32px;
 	border-left: 1px solid #1f1f2f;
 	text-align: center;
+	overflow: auto;
+}
+
+.faces-carousel {
+	transition: transform 220ms ease, opacity 220ms ease;
+	touch-action: pan-y;
+}
+
+/* SLIDE OUT */
+.faces-carousel.slide-out[data-dir="right"] {
+	transform: translateX(-40px);
+	opacity: 0;
+}
+
+.faces-carousel.slide-out[data-dir="left"] {
+	transform: translateX(40px);
+	opacity: 0;
+}
+
+/* SLIDE IN */
+.faces-carousel.slide-in[data-dir="right"] {
+	transform: translateX(40px);
+	opacity: 0;
+	animation: slide-in 220ms ease forwards;
+}
+
+.faces-carousel.slide-in[data-dir="left"] {
+	transform: translateX(-40px);
+	opacity: 0;
+	animation: slide-in 220ms ease forwards;
+}
+
+@keyframes slide-in {
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+.custom-mode .face {
+	background: #171722;
+}
+
+.custom-mode .face:hover {
+	background: #20203a;
+}
+
+.custom-mode .face-number {
+	background: #3a3a55;
+	color: #ddd;
+}
+
+.list-buttons {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 8px;
+}
+
+/* Base button */
+.list-buttons button {
+	background: #1b1b28;
+	color: #ddd;
+	border: 1px solid #26263a;
+	border-radius: 10px;
+	padding: 10px 12px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.15s ease, transform 0.1s ease,
+		border-color 0.15s ease;
+}
+
+/* Hover */
+.list-buttons button:hover {
+	background: #232338;
+}
+
+/* Active (current list) */
+.list-buttons button.active {
+	background: linear-gradient(135deg, #2a2a44, #1f1f35);
+	border-color: rgba(255, 42, 42, 0.4);
+	color: #fff;
+	box-shadow: inset 0 0 0 1px rgba(255, 42, 42, 0.25);
+}
+
+/* Press */
+.list-buttons button:active {
+	transform: scale(0.97);
+}
+
+/* Mobile polish */
+@media (max-width: 640px) {
+	.list-buttons {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.list-buttons button {
+		font-size: 13px;
+		padding: 9px 10px;
+	}
+}
+
+.reset-button {
+	background: transparent;
+	border: 1px solid #3a3a55;
+	color: #aaa;
+	margin-top: 15px;
+	border-radius: 10px;
+	padding: 8px 12px;
+	font-size: 13px;
+	cursor: pointer;
+	grid-column: span 2;
+	opacity: 0.85;
+	transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.reset-button:hover {
+	background: #2a1a1a;
+	opacity: 1;
+	color: #fff;
 }

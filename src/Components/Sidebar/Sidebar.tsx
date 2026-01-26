@@ -1,6 +1,11 @@
+import { useState } from "react";
 import { Stats } from "../Stats/Stats";
 import { FacesList } from "../FacesList/FacesList";
-import { D20_FACES } from "../../data/d20Faces.tsx";
+
+import { D20_FACES } from "../../data/d20Faces";
+import { DATE_NIGHT_FACES } from "../../data/d20Faces";
+import { MOVIE_GENRE_FACES } from "../../data/d20Faces";
+import type { D20Face } from "../../data/d20Faces";
 
 import "./Sidebar.css";
 
@@ -10,11 +15,140 @@ type SidebarProps = {
 	landedRoll: number | null;
 };
 
+type ListMode = "food" | "date" | "movies" | "custom";
+
 export const Sidebar = ({ lastRoll, totalRolls, landedRoll }: SidebarProps) => {
+	const [mode, setMode] = useState<ListMode>("food");
+	const [currentList, setCurrentList] = useState<D20Face[]>(D20_FACES);
+	const [animating, setAnimating] = useState<"out" | "in" | null>(null);
+	const [direction, setDirection] = useState<"left" | "right">("right");
+
+	// 🔧 Custom list = ONLY filled values
+	const [customItems, setCustomItems] = useState<string[]>(() => {
+		const saved = localStorage.getItem("customDice");
+		return saved ? JSON.parse(saved) : [];
+	});
+
+	// derived faces for custom list
+	const customFaces: D20Face[] = customItems.map((text, i) => ({
+		value: i + 1,
+		text,
+	}));
+
+	const resetCustomList = () => {
+		setCustomItems([]);
+		localStorage.removeItem("customDice");
+	};
+
+	const switchList = (
+		nextList: D20Face[],
+		dir: "left" | "right",
+		nextMode: ListMode
+	) => {
+		if (animating) return;
+
+		setDirection(dir);
+		setAnimating("out");
+
+		setTimeout(() => {
+			setCurrentList(nextList);
+			setMode(nextMode);
+			setAnimating("in");
+
+			setTimeout(() => setAnimating(null), 220);
+		}, 220);
+	};
+
+	// ➕ add new custom option
+	const addCustomItem = () => {
+		if (customItems.length >= 20) return;
+		const next = [...customItems, ""];
+		setCustomItems(next);
+		localStorage.setItem("customDice", JSON.stringify(next));
+	};
+
+	// ✏️ edit custom option
+	const updateCustomItem = (index: number, value: string) => {
+		const next = [...customItems];
+		next[index] = value;
+
+		// remove empty rows
+		const cleaned = next.filter((v) => v.trim() !== "");
+
+		setCustomItems(cleaned);
+		localStorage.setItem("customDice", JSON.stringify(cleaned));
+	};
+
+	const facesToShow = mode === "custom" ? customFaces : currentList;
+
+	const mappedActiveValue =
+		landedRoll && facesToShow.length > 0
+			? ((landedRoll - 1) % facesToShow.length) + 1
+			: null;
+
 	return (
 		<aside className="sidebar">
 			<Stats lastRoll={lastRoll} totalRolls={totalRolls} />
-			<FacesList faces={D20_FACES} activeValue={landedRoll} />
+
+			<div className="list-buttons">
+				<button
+					className={mode === "food" ? "active" : ""}
+					onClick={() => switchList(D20_FACES, "left", "food")}
+				>
+					Food 🍔
+				</button>
+
+				<button
+					className={mode === "date" ? "active" : ""}
+					onClick={() => switchList(DATE_NIGHT_FACES, "right", "date")}
+				>
+					Date ❤️
+				</button>
+
+				<button
+					className={mode === "movies" ? "active" : ""}
+					onClick={() => switchList(MOVIE_GENRE_FACES, "right", "movies")}
+				>
+					Movies 🎬
+				</button>
+
+				<button
+					className={mode === "custom" ? "active" : ""}
+					onClick={() => switchList(customFaces, "right", "custom")}
+				>
+					Custom 🎲
+				</button>
+			</div>
+
+			<div
+				className={`faces-carousel ${
+					animating === "out"
+						? "slide-out"
+						: animating === "in"
+						? "slide-in"
+						: ""
+				}`}
+				data-dir={direction}
+			>
+				<FacesList
+					faces={facesToShow}
+					activeValue={mappedActiveValue}
+					editable={mode === "custom"}
+					onEdit={updateCustomItem}
+					onAdd={addCustomItem}
+				/>
+
+				{mode === "custom" && (
+					<p>
+						Add less than 20 values and the dice will randomly select a value
+					</p>
+				)}
+				{mode === "custom" && customItems.length > 0 && (
+					<button className="reset-button" onClick={resetCustomList}>
+						Reset ✖
+					</button>
+				)}
+			</div>
 		</aside>
 	);
 };

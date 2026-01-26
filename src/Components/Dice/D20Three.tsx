@@ -2,6 +2,7 @@ import { useRef, useEffect, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 import * as THREE from "three";
+import "./Dice.css";
 
 type D20MeshProps = {
 	rolling: boolean;
@@ -20,7 +21,7 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 	const targetQuat = useRef<THREE.Quaternion | null>(null);
 
 	const spinTime = useRef(0);
-	const SPIN_DURATION = 1; // seconds
+	const SPIN_DURATION = 1.5; // seconds
 
 	// Build geometry once
 	const geom = useMemo(() => new THREE.IcosahedronGeometry(1.2, 0), []);
@@ -154,15 +155,14 @@ type D20ThreeProps = {
 
 export const D20Three = ({ rolling, value, onLand }: D20ThreeProps) => {
 	return (
-		<Canvas
-			camera={{ position: [0, 0, 10], fov: 45 }}
-			style={{ width: "min(80vw, 70vw)", height: "min(80vw, 70vw)" }}
-		>
-			<ambientLight intensity={0.25} />
-			<directionalLight position={[5, 5, 5]} intensity={1.2} />
-			<directionalLight position={[-3, -3, 2]} intensity={0.4} />
+		<div className="dice-wrapper">
+			<Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+				<ambientLight intensity={0.25} />
+				<directionalLight position={[5, 5, 5]} intensity={1.2} />
+				<directionalLight position={[-3, -3, 2]} intensity={0.4} />
 
-			<D20Mesh rolling={rolling} value={value} onLand={onLand} />
-		</Canvas>
+				<D20Mesh rolling={rolling} value={value} onLand={onLand} />
+			</Canvas>
+		</div>
 	);
 };
