@@ -24,6 +24,7 @@
 	width: 800px;
 	height: 800px;
 	transition: transform 0.12s ease;
+	overflow: hidden;
 }
 
 /* Tablet */
