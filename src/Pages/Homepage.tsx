@@ -36,6 +36,7 @@ export const Homepage = () => {
 				title="Roll For It!"
 				subtitle="Decision paralysis? Let the dice help!"
 			/>
+
 			<Stats totalRolls={totalRolls} />
 
 			<div className="homepage-content">
@@ -58,6 +59,63 @@ export const Homepage = () => {
 					}}
 				/>
 			</div>
+
+			{/* ✅ STATIC PUBLISHER CONTENT (IMPORTANT FOR ADSENSE) */}
+			<section className="homepage-explainer">
+				<h2>What is Roll For It?</h2>
+
+				<p>
+					Roll For It is a simple decision-making tool designed to help you move
+					forward when you’re stuck choosing between multiple options. Instead
+					of overthinking or endlessly weighing pros and cons, you define your
+					choices and let a fair dice roll decide.
+				</p>
+
+				<p>
+					This tool is commonly used for things like deciding what to eat,
+					choosing a movie or game, planning a date idea, or breaking indecision
+					when starting a task. Every roll is generated using true randomness
+					provided by your browser and mapped evenly across your available
+					options.
+				</p>
+
+				<p>
+					Roll For It does not track personal data, does not influence outcomes,
+					and does not reuse past results. Each roll is independent, unbiased,
+					and calculated fresh every time you press roll.
+				</p>
+
+				<h2>How results are selected</h2>
+
+				<p>
+					When a roll occurs, Roll For It maps the dice value to your list using
+					a simple and fair mathematical formula called <strong>modulo</strong>.
+				</p>
+
+				<p>The formula used is:</p>
+
+				<pre className="code-block">{`index = (roll - 1) % numberOfOptions`}</pre>
+
+				<p>
+					Dice rolls are counted from 1, while lists are counted from 0.
+					Subtracting 1 aligns the two correctly. The modulo operation ensures
+					that if the dice roll is larger than the number of available options,
+					it safely wraps back around the list.
+				</p>
+
+				<p>
+					This guarantees that every option has an equal chance of being
+					selected, with no weighting, memory, or bias between rolls.
+				</p>
+
+				<h2>About animations</h2>
+
+				<p>
+					Animations are purely visual and do not influence the outcome. The
+					result is determined instantly when you roll, before any animation
+					finishes.
+				</p>
+			</section>
 
 			<Footer />
 

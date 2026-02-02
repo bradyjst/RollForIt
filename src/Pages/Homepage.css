@@ -148,3 +148,19 @@
 	color: #eaeaea;
 	overflow-x: auto;
 }
+
+.homepage-explainer {
+	max-width: 900px;
+	margin: 2rem auto 3rem;
+	padding: 0 1.5rem;
+	line-height: 1.7;
+}
+
+.homepage-explainer h2 {
+	margin-bottom: 0.75rem;
+}
+
+.homepage-explainer p {
+	margin-bottom: 1rem;
+	color: #e5e5e5;
+}
