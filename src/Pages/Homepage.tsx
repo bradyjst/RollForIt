@@ -1,9 +1,8 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { PageHeader } from "../Components/PageHeader/PageHeader";
 import { Stats } from "../Components/Stats/Stats";
 import { Dice } from "../Components/Dice/Dice";
 import { Sidebar } from "../Components/Sidebar/Sidebar";
-import type { SidebarHandle } from "../Components/Sidebar/Sidebar";
 
 import "./Homepage.css";
 
@@ -12,16 +11,15 @@ export const Homepage = () => {
 	const [landedRoll, setLandedRoll] = useState<number | null>(null);
 	const [rolling, setRolling] = useState(false);
 	const [totalRolls, setTotalRolls] = useState(0);
-
-	const sidebarRef = useRef<SidebarHandle>(null);
-
 	const [toastText, setToastText] = useState<string | null>(null);
+	const [toastLink, setToastLink] = useState<{
+		label: string;
+		url: string;
+	} | null>(null);
 
 	function rollDice() {
 		if (rolling) return;
-
-		const value = Math.floor(Math.random() * 20) + 1;
-		setRoll(value);
+		setRoll(Math.floor(Math.random() * 20) + 1);
 		setRolling(true);
 	}
 
@@ -29,14 +27,6 @@ export const Homepage = () => {
 		setRolling(false);
 		setLandedRoll(roll);
 		setTotalRolls((r) => r + 1);
-
-		const text = sidebarRef.current?.getTextForRoll(roll);
-
-		if (!text) return;
-
-		setTimeout(() => {
-			setToastText(text);
-		}, 50);
 	}
 
 	return (
@@ -52,14 +42,35 @@ export const Homepage = () => {
 					onLand={handleDiceLand}
 				/>
 
-				<Sidebar ref={sidebarRef} landedRoll={landedRoll} rollDice={rollDice} />
+				<Sidebar
+					landedRoll={landedRoll}
+					rollDice={rollDice}
+					onToastResult={setToastText}
+					onToastLink={setToastLink}
+					onListChange={() => {
+						setToastText(null);
+						setToastLink(null);
+						setLandedRoll(null);
+					}}
+				/>
 			</div>
 
 			{toastText && (
-				<div className="toast">
+				<div className="toast-backdrop">
 					<div className="toast-card">
 						<p className="toast-title">You got</p>
 						<p className="toast-text">{toastText}</p>
+
+						{toastLink && (
+							<a
+								href={toastLink.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="toast-link"
+							>
+								{toastLink.label}
+							</a>
+						)}
 
 						<div className="toast-actions">
 							<button onClick={() => setToastText(null)}>Keep</button>

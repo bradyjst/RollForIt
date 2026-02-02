@@ -12,16 +12,39 @@
 	align-items: center;
 }
 
+.toast-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.45);
+	backdrop-filter: blur(2px);
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: all;
+}
+
 .toast {
 	position: fixed;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 1000;
-
-	/* polish */
 	max-width: min(90vw, 420px);
 	text-align: center;
+}
+
+.toast-link {
+	display: inline-block;
+	margin: 12px 0;
+	color: #ff6b6b;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.toast-link:hover {
+	text-decoration: none;
+	color: #ff6b6b;
 }
 
 .toast-card {
