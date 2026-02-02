@@ -3,7 +3,7 @@ import { Homepage } from "./Pages/Homepage";
 import About from "./Pages/About";
 import Privacy from "./Pages/Privacy";
 import Terms from "./Pages/Terms";
-import HowItWorks from "./Pages/HowItWorks";
+
 import Contact from "./Pages/Contact";
 
 import "./App.css";
@@ -16,7 +16,7 @@ function App() {
 				<Route path="/about" element={<About />} />
 				<Route path="/privacy" element={<Privacy />} />
 				<Route path="/terms" element={<Terms />} />
-				<Route path="/how-it-works" element={<HowItWorks />} />
+
 				<Route path="/contact" element={<Contact />} />
 			</Routes>
 		</BrowserRouter>

@@ -62,28 +62,20 @@ export const Homepage = () => {
 
 			{/* ✅ STATIC PUBLISHER CONTENT (IMPORTANT FOR ADSENSE) */}
 			<section className="homepage-explainer">
-				<h2>What is Roll For It?</h2>
+				<h1>How the Dice Works</h1>
 
 				<p>
-					Roll For It is a simple decision-making tool designed to help you move
-					forward when you’re stuck choosing between multiple options. Instead
-					of overthinking or endlessly weighing pros and cons, you define your
-					choices and let a fair dice roll decide.
+					Roll For It uses true random number generation provided by your
+					browser. Every roll is independent, unbiased, and calculated in real
+					time.
 				</p>
 
-				<p>
-					This tool is commonly used for things like deciding what to eat,
-					choosing a movie or game, planning a date idea, or breaking indecision
-					when starting a task. Every roll is generated using true randomness
-					provided by your browser and mapped evenly across your available
-					options.
-				</p>
-
-				<p>
-					Roll For It does not track personal data, does not influence outcomes,
-					and does not reuse past results. Each roll is independent, unbiased,
-					and calculated fresh every time you press roll.
-				</p>
+				<ol>
+					<li>You select or create a list of options</li>
+					<li>Each option is given equal probability</li>
+					<li>A random dice roll is generated when you press Roll</li>
+					<li>The roll is mapped directly to one option</li>
+				</ol>
 
 				<h2>How results are selected</h2>
 
