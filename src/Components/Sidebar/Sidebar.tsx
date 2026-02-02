@@ -28,9 +28,14 @@ function buildMapsUrl(text: string) {
 }
 
 function buildMovieSearchUrl(text: string) {
-	return `https://www.google.com/search?q=${encodeURIComponent(
-		`best ${text} movies`
-	)}`;
+	const cleaned = text
+		.replace(/[^\p{L}\p{N}\s]/gu, "")
+		.trim()
+		.toLowerCase();
+
+	return `https://www.imdb.com/search/title/?genres=${encodeURIComponent(
+		cleaned
+	)}&sort=user_rating,desc`;
 }
 
 export const Sidebar = ({
