@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./homepage.css";
+import "./Homepage.css";
 
 export default function Terms() {
 	return (
