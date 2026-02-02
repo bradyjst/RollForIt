@@ -136,6 +136,14 @@ export const Sidebar = ({ landedRoll, rollDice }: SidebarProps) => {
 							  }
 							: { enabled: false }
 					}
+					movieSearch={
+						mode === "movies"
+							? {
+									enabled: true,
+									exclude: ["reroll"],
+							  }
+							: { enabled: false }
+					}
 				/>
 
 				{mode === "custom" && (

@@ -66,8 +66,8 @@ export const MOVIE_GENRE_FACES = [
 	{ value: 14, text: "Classic 🎞️" },
 	{ value: 15, text: "Indie 🎬" },
 	{ value: 16, text: "Foreign 🌍" },
-	{ value: 17, text: "Feel-Good 😊" },
-	{ value: 18, text: "Mind-Bending 🌀" },
-	{ value: 19, text: "Bad Movie (So Bad It’s Good) 🧀" },
-	{ value: 20, text: "Reroll 🔄" },
+	{ value: 17, text: "Adventure 🏕️" },
+	{ value: 18, text: "War 🗡️" },
+	{ value: 19, text: "Western 🌵" },
+	{ value: 20, text: "Musical 🎵" },
 ];

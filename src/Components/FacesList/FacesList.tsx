@@ -8,8 +8,11 @@ type FacesListProps = {
 	activeValue: number | null;
 	editable?: boolean;
 	onEdit?: (index: number, value: string) => void;
-	onAdd?: () => void;
 	nearMe?: {
+		enabled: boolean;
+		exclude?: string[];
+	};
+	movieSearch?: {
 		enabled: boolean;
 		exclude?: string[];
 	};
@@ -23,13 +26,21 @@ function buildMapsUrl(text: string) {
 	)}`;
 }
 
+function buildMovieSearchUrl(genre: string) {
+	const cleaned = genre.replace(/[^\p{L}\p{N}\s]/gu, "").trim();
+
+	return `https://www.imdb.com/search/title/?title_type=feature&genres=${encodeURIComponent(
+		cleaned.toLowerCase()
+	)}`;
+}
+
 export const FacesList = ({
 	faces,
 	activeValue,
 	editable = false,
 	onEdit,
-	onAdd,
 	nearMe,
+	movieSearch,
 }: FacesListProps) => {
 	const [editingIndex, setEditingIndex] = useState<number | null>(null);
 	const [draft, setDraft] = useState("");
@@ -41,12 +52,23 @@ export const FacesList = ({
 				const isEditing = editingIndex === index;
 
 				const textLower = face.text.toLowerCase();
-				const isExcluded =
+
+				// near-me logic
+				const isNearMeExcluded =
 					nearMe?.exclude?.some((x) => textLower.includes(x.toLowerCase())) ??
 					false;
 
 				const showNearMe =
-					nearMe?.enabled && isActive && !editable && !isExcluded;
+					nearMe?.enabled && isActive && !editable && !isNearMeExcluded;
+
+				// movie search logic
+				const isMovieExcluded =
+					movieSearch?.exclude?.some((x) =>
+						textLower.includes(x.toLowerCase())
+					) ?? false;
+
+				const showMovieSearch =
+					movieSearch?.enabled && isActive && !editable && !isMovieExcluded;
 
 				return (
 					<div
@@ -96,18 +118,23 @@ export const FacesList = ({
 										📍 Near me
 									</a>
 								)}
+
+								{showMovieSearch && (
+									<a
+										className="near-me"
+										href={buildMovieSearchUrl(face.text)}
+										target="_blank"
+										rel="noopener noreferrer"
+										onClick={(e) => e.stopPropagation()}
+									>
+										🎬 See movies
+									</a>
+								)}
 							</>
 						)}
 					</div>
 				);
 			})}
-
-			{editable && faces.length < 20 && (
-				<div className="face add-row" onClick={onAdd}>
-					<span className="face-number">+</span>
-					<span className="face-text add-text">Add option</span>
-				</div>
-			)}
 		</div>
 	);
 };
