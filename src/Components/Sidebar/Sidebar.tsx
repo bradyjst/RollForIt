@@ -56,6 +56,19 @@ export const Sidebar = ({
 	/** 🔒 prevents toast re-trigger on list switch */
 	const lastHandledRollRef = useRef<number | null>(null);
 
+	// 🔥 Animation state for the carousel
+	const [carouselPhase, setCarouselPhase] = useState<
+		"" | "slide-out" | "slide-in"
+	>("");
+	const [carouselDir, setCarouselDir] = useState<"left" | "right">("right");
+	const animTimerRef = useRef<number | null>(null);
+
+	useEffect(() => {
+		return () => {
+			if (animTimerRef.current) window.clearTimeout(animTimerRef.current);
+		};
+	}, []);
+
 	const customFaces: D20Face[] = customItems.map((text, i) => ({
 		value: i + 1,
 		text,
@@ -110,10 +123,31 @@ export const Sidebar = ({
 	}, [landedRoll, activeFace, mode, onToastLink, onToastResult]);
 
 	const switchList = (list: D20Face[], nextMode: ListMode) => {
-		onListChange(); // 🔥 dismiss toast
-		lastHandledRollRef.current = null; // 🔥 prevent resurrection
-		setCurrentList(list);
-		setMode(nextMode);
+		if (nextMode === mode) return;
+
+		onListChange(); // dismiss toast
+		lastHandledRollRef.current = null;
+
+		// determine direction (based on button order)
+		const order: ListMode[] = ["food", "date", "movies", "custom"];
+		const prevIdx = order.indexOf(mode);
+		const nextIdx = order.indexOf(nextMode);
+		setCarouselDir(nextIdx > prevIdx ? "right" : "left");
+
+		// play slide-out, swap list, then slide-in
+		setCarouselPhase("slide-out");
+
+		if (animTimerRef.current) window.clearTimeout(animTimerRef.current);
+		animTimerRef.current = window.setTimeout(() => {
+			setCurrentList(list);
+			setMode(nextMode);
+			setCarouselPhase("slide-in");
+
+			// optional: clear phase after the animation finishes
+			animTimerRef.current = window.setTimeout(() => {
+				setCarouselPhase("");
+			}, 240);
+		}, 220);
 	};
 
 	const updateCustomItem = (i: number, value: string) => {
@@ -142,12 +176,15 @@ export const Sidebar = ({
 				Roll Dice
 			</button>
 
-			<FacesList
-				faces={facesToShow}
-				activeValue={activeFace?.value ?? null}
-				editable={mode === "custom"}
-				onEdit={updateCustomItem}
-			/>
+			{/* ✅ THIS is what your CSS is targeting */}
+			<div className={`faces-carousel ${carouselPhase}`} data-dir={carouselDir}>
+				<FacesList
+					faces={facesToShow}
+					activeValue={activeFace?.value ?? null}
+					editable={mode === "custom"}
+					onEdit={updateCustomItem}
+				/>
+			</div>
 		</aside>
 	);
 };

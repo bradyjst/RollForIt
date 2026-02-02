@@ -90,3 +90,7 @@
 	opacity: 1;
 	color: #fff;
 }
+
+.faces-carousel {
+	overflow: hidden;
+}

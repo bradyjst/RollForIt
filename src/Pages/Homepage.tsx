@@ -5,6 +5,7 @@ import { Dice } from "../Components/Dice/Dice";
 import { Sidebar } from "../Components/Sidebar/Sidebar";
 
 import "./Homepage.css";
+import Footer from "../Components/Footer/Footer";
 
 export const Homepage = () => {
 	const [roll, setRoll] = useState<number | null>(null);
@@ -31,7 +32,10 @@ export const Homepage = () => {
 
 	return (
 		<div className="homepage-container">
-			<PageHeader title="Roll For It!" />
+			<PageHeader
+				title="Roll For It!"
+				subtitle="Decision paralysis? Let the dice help!"
+			/>
 			<Stats totalRolls={totalRolls} />
 
 			<div className="homepage-content">
@@ -54,6 +58,8 @@ export const Homepage = () => {
 					}}
 				/>
 			</div>
+
+			<Footer />
 
 			{toastText && (
 				<div className="toast-backdrop">

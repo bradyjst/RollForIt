@@ -1,16 +1,20 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
-export const Footer: React.FC = () => {
+export default function Footer() {
 	return (
 		<footer className="site-footer">
-			<div className="footer-content">
-				<div className="footer-col footer-center">
-					<a href="tel:1-778-344-2686" className="footer-link">
-						1-778-344-2686
-					</a>
-				</div>
-			</div>
+			<nav className="footer-links">
+				<Link to="/about">About</Link>
+				<Link to="/terms">Terms</Link>
+				<Link to="/how-it-works">How It Works</Link>
+				<Link to="/privacy">Privacy</Link>
+				<Link to="/contact">Contact</Link>
+			</nav>
+
+			<p className="footer-copy">
+				© {new Date().getFullYear()} Roll For It. All rights reserved.
+			</p>
 		</footer>
 	);
-};
+}

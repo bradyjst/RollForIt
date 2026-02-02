@@ -14,10 +14,6 @@ export const Dice = ({ value, rolling, onRoll, onLand }: DiceProps) => {
 			<button className="dice" onClick={onRoll} disabled={rolling}>
 				<D20Three value={value} rolling={rolling} onLand={onLand} />
 			</button>
-
-			<div className="dice-hint">
-				{rolling ? "Rolling..." : "Click to roll"}
-			</div>
 		</div>
 	);
 };

@@ -46,6 +46,8 @@ export const FacesList = ({
 	const [draft, setDraft] = useState("");
 
 	return (
+		/* 🔥 RESTORED WRAPPER — animations live here */
+
 		<div className="faces-list">
 			{faces.map((face, index) => {
 				const isActive = activeValue === face.value;
