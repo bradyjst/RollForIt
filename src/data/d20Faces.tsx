@@ -23,7 +23,7 @@ export const D20_FACES = [
 	{ value: 17, text: "Dessert 🍰" },
 	{ value: 18, text: "Fast Food 🍟" },
 	{ value: 19, text: "Healthy / Salad 🥗" },
-	{ value: 20, text: "Reroll 🔄" },
+	{ value: 20, text: "Street Food 🥟" },
 ];
 
 export const DATE_NIGHT_FACES = [
@@ -46,7 +46,7 @@ export const DATE_NIGHT_FACES = [
 	{ value: 17, text: "Scenic Drive 🌄" },
 	{ value: 18, text: "Picnic 🧺" },
 	{ value: 19, text: "Surprise Me 🎁" },
-	{ value: 20, text: "Reroll 🔄" },
+	{ value: 20, text: "Stargazing 🌌" },
 ];
 
 export const MOVIE_GENRE_FACES = [

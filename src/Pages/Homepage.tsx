@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { PageHeader } from "../Components/PageHeader/PageHeader";
 import { Stats } from "../Components/Stats/Stats";
 import { Dice } from "../Components/Dice/Dice";
 import { Sidebar } from "../Components/Sidebar/Sidebar";
-import { CustomListModal } from "../Components/Modal/Modal";
+import type { SidebarHandle } from "../Components/Sidebar/Sidebar";
 
 import "./Homepage.css";
 
@@ -13,7 +13,9 @@ export const Homepage = () => {
 	const [rolling, setRolling] = useState(false);
 	const [totalRolls, setTotalRolls] = useState(0);
 
-	const [showCustomModal, setShowCustomModal] = useState(false);
+	const sidebarRef = useRef<SidebarHandle>(null);
+
+	const [toastText, setToastText] = useState<string | null>(null);
 
 	function rollDice() {
 		if (rolling) return;
@@ -27,12 +29,14 @@ export const Homepage = () => {
 		setRolling(false);
 		setLandedRoll(roll);
 		setTotalRolls((r) => r + 1);
-	}
 
-	function saveCustomDice(items: string[]) {
-		const normalized = items.slice(0, 20);
-		localStorage.setItem("customDice", JSON.stringify(normalized));
-		setShowCustomModal(false);
+		const text = sidebarRef.current?.getTextForRoll(roll);
+
+		if (!text) return;
+
+		setTimeout(() => {
+			setToastText(text);
+		}, 50);
 	}
 
 	return (
@@ -48,19 +52,28 @@ export const Homepage = () => {
 					onLand={handleDiceLand}
 				/>
 
-				<Sidebar
-					lastRoll={roll}
-					totalRolls={totalRolls}
-					landedRoll={landedRoll}
-					rollDice={rollDice}
-				/>
+				<Sidebar ref={sidebarRef} landedRoll={landedRoll} rollDice={rollDice} />
 			</div>
 
-			{showCustomModal && (
-				<CustomListModal
-					onSave={saveCustomDice}
-					onClose={() => setShowCustomModal(false)}
-				/>
+			{toastText && (
+				<div className="toast">
+					<div className="toast-card">
+						<p className="toast-title">You got</p>
+						<p className="toast-text">{toastText}</p>
+
+						<div className="toast-actions">
+							<button onClick={() => setToastText(null)}>Keep</button>
+							<button
+								onClick={() => {
+									setToastText(null);
+									rollDice();
+								}}
+							>
+								Re-roll
+							</button>
+						</div>
+					</div>
+				</div>
 			)}
 		</div>
 	);

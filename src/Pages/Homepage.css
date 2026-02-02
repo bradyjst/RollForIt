@@ -12,6 +12,60 @@
 	align-items: center;
 }
 
+.toast {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+
+	/* polish */
+	max-width: min(90vw, 420px);
+	text-align: center;
+}
+
+.toast-card {
+	background: #151521;
+	border: 1px solid #26263a;
+	border-radius: 14px;
+	padding: 16px 20px;
+	min-width: 240px;
+	text-align: center;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.toast-title {
+	font-size: 13px;
+	opacity: 0.7;
+	margin-bottom: 6px;
+}
+
+.toast-text {
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 12px;
+}
+
+.toast-actions {
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+}
+
+.toast-actions button {
+	background: #1f1f35;
+	border: 1px solid #2a2a44;
+	border-radius: 10px;
+	padding: 8px 14px;
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.toast-actions button:hover {
+	background: #2a2a44;
+}
+
 @media (max-width: 1200px) {
 	.homepage-content {
 		flex-direction: column;
