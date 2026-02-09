@@ -1,6 +1,5 @@
 import { useRef, useEffect, useMemo } from "react";
 import type { DiceTheme } from "./DiceTheme";
-import { DEFAULT_DICE_THEME } from "./DiceTheme";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 import * as THREE from "three";
@@ -19,17 +18,17 @@ type FaceInfo = {
 	quat: THREE.Quaternion;
 };
 
-const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
+const D20Mesh = ({ rolling, value, onLand, theme }: D20MeshProps) => {
 	const mesh = useRef<THREE.Mesh>(null!);
 	const targetQuat = useRef<THREE.Quaternion | null>(null);
-
 	const spinTime = useRef(0);
-	const SPIN_DURATION = 2.5; // seconds
 
-	// Build geometry once
+	const SPIN_DURATION = 2.5;
+
+	// Geometry (built once)
 	const geom = useMemo(() => new THREE.IcosahedronGeometry(1.2, 0), []);
 
-	// Derive face centers + normals from geometry
+	// Face data (derived once)
 	const faces = useMemo<FaceInfo[]>(() => {
 		const g = geom.toNonIndexed();
 		const pos = g.getAttribute("position") as THREE.BufferAttribute;
@@ -65,35 +64,34 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 		return out.slice(0, 20);
 	}, [geom]);
 
+	// Animation loop
 	useFrame((_, delta) => {
 		if (!mesh.current) return;
 
-		// Phase 1: visible spin
+		// Phase 1: spinning
 		if (rolling && spinTime.current < SPIN_DURATION) {
 			spinTime.current += delta;
-
 			mesh.current.rotation.x += 6 * delta;
 			mesh.current.rotation.y += 7 * delta;
 			mesh.current.rotation.z += 5 * delta;
 			return;
 		}
 
-		// Phase 2: snap to target face
+		// Phase 2: snap to face
 		if (targetQuat.current) {
 			mesh.current.quaternion.slerp(targetQuat.current, 0.15);
 
 			if (mesh.current.quaternion.angleTo(targetQuat.current) < 0.05) {
 				mesh.current.quaternion.copy(targetQuat.current);
 				targetQuat.current = null;
-				onLand?.(); // ✅ TRUE landing moment
+				onLand?.();
 			}
 		}
 	});
 
-	// Set target rotation when a roll starts
+	// Set target face on roll
 	useEffect(() => {
-		if (!rolling || value === null) return;
-		if (value < 1 || value > 20) return;
+		if (!rolling || value == null || value < 1 || value > 20) return;
 
 		spinTime.current = 0;
 
@@ -107,26 +105,30 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 	}, [rolling, value, faces]);
 
 	return (
-		<mesh ref={mesh} geometry={geom} scale={1}>
+		<mesh ref={mesh} geometry={geom}>
+			{/* Dice body */}
 			<meshPhysicalMaterial
-				color={DEFAULT_DICE_THEME.bodyColor}
-				roughness={DEFAULT_DICE_THEME.roughness}
-				metalness={DEFAULT_DICE_THEME.metalness}
-				clearcoat={DEFAULT_DICE_THEME.clearcoat}
+				key={JSON.stringify(theme)}
+				color={theme.bodyColor}
+				roughness={theme.roughness}
+				metalness={theme.metalness}
+				clearcoat={theme.clearcoat}
 				clearcoatRoughness={0.15}
 			/>
 
+			{/* Edges */}
 			<group scale={1.01}>
 				<lineSegments>
 					<edgesGeometry args={[geom]} />
 					<lineBasicMaterial
-						color={DEFAULT_DICE_THEME.edgeColor}
+						color={theme.edgeColor}
 						transparent
 						opacity={0.4}
 					/>
 				</lineSegments>
 			</group>
 
+			{/* Face numbers */}
 			{faces.map((f, idx) => {
 				const faceValue = idx + 1;
 				const pos = f.center.clone().add(f.normal.clone().multiplyScalar(0.06));
@@ -139,9 +141,9 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 					>
 						<Text
 							fontSize={0.28}
-							color={DEFAULT_DICE_THEME.textColor}
+							color={theme.textColor}
 							outlineWidth={0.02}
-							outlineColor={DEFAULT_DICE_THEME.textColor}
+							outlineColor={theme.textColor}
 							anchorX="center"
 							anchorY="middle"
 						>
@@ -158,9 +160,10 @@ type D20ThreeProps = {
 	rolling: boolean;
 	value: number | null;
 	onLand?: () => void;
+	theme: DiceTheme;
 };
 
-export const D20Three = ({ rolling, value, onLand }: D20ThreeProps) => {
+export const D20Three = ({ rolling, value, onLand, theme }: D20ThreeProps) => {
 	return (
 		<div className="dice-wrapper">
 			<Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
@@ -169,10 +172,10 @@ export const D20Three = ({ rolling, value, onLand }: D20ThreeProps) => {
 				<directionalLight position={[-3, -3, 2]} intensity={0.4} />
 
 				<D20Mesh
-					theme={DEFAULT_DICE_THEME}
 					rolling={rolling}
 					value={value}
 					onLand={onLand}
+					theme={theme}
 				/>
 			</Canvas>
 		</div>

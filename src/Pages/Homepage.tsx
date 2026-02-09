@@ -14,6 +14,7 @@ export const Homepage = () => {
 	const [landedRoll, setLandedRoll] = useState<number | null>(null);
 	const [rolling, setRolling] = useState(false);
 	const [totalRolls, setTotalRolls] = useState(0);
+	const [showThemeEditor, setShowThemeEditor] = useState(false);
 	const [toastText, setToastText] = useState<string | null>(null);
 	const [toastLink, setToastLink] = useState<{
 		label: string;
@@ -69,6 +70,7 @@ export const Homepage = () => {
 					rolling={rolling}
 					onRoll={rollDice}
 					onLand={handleDiceLand}
+					theme={diceTheme}
 				/>
 
 				<Sidebar
@@ -76,6 +78,8 @@ export const Homepage = () => {
 					rollDice={rollDice}
 					onToastResult={setToastText}
 					onToastLink={setToastLink}
+					showEditor={showThemeEditor}
+					setShowEditor={setShowThemeEditor}
 					onListChange={() => {
 						setToastText(null);
 						setToastLink(null);
@@ -83,7 +87,9 @@ export const Homepage = () => {
 					}}
 				/>
 
-				<StyleEditor theme={diceTheme} onChange={setDiceTheme} />
+				{showThemeEditor && (
+					<StyleEditor theme={diceTheme} onChange={setDiceTheme} />
+				)}
 			</div>
 
 			{/* ✅ STATIC PUBLISHER CONTENT (IMPORTANT FOR ADSENSE) */}

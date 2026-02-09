@@ -16,6 +16,8 @@ type SidebarProps = {
 	onToastResult: (text: string | null) => void;
 	onToastLink: (link: { label: string; url: string } | null) => void;
 	onListChange: () => void;
+	setShowEditor: (arg0: boolean) => void;
+	showEditor: boolean;
 };
 
 type ListMode = "food" | "date" | "movies" | "custom";
@@ -45,6 +47,8 @@ export const Sidebar = ({
 	onToastResult,
 	onToastLink,
 	onListChange,
+	showEditor,
+	setShowEditor,
 }: SidebarProps) => {
 	const [mode, setMode] = useState<ListMode>("food");
 	const [currentList, setCurrentList] = useState<D20Face[]>(D20_FACES);
@@ -162,6 +166,13 @@ export const Sidebar = ({
 
 	return (
 		<aside className="sidebar">
+			<button
+				className="open-theme-button"
+				onClick={() => setShowEditor(!showEditor)}
+			>
+				🎨 Customize Dice
+			</button>
+
 			<div className="list-buttons">
 				<button
 					onClick={() => {
@@ -204,7 +215,6 @@ export const Sidebar = ({
 				Roll Dice
 			</button>
 
-			{/* ✅ THIS is what your CSS is targeting */}
 			<div className={`faces-carousel ${carouselPhase}`} data-dir={carouselDir}>
 				<FacesList
 					faces={facesToShow}
