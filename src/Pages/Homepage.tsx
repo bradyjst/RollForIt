@@ -3,9 +3,8 @@ import { PageHeader } from "../Components/PageHeader/PageHeader";
 import { Stats } from "../Components/Stats/Stats";
 import { Dice } from "../Components/Dice/Dice";
 import { Sidebar } from "../Components/Sidebar/Sidebar";
-
-import "./Homepage.css";
 import Footer from "../Components/Footer/Footer";
+import "./Homepage.css";
 
 export const Homepage = () => {
 	const [roll, setRoll] = useState<number | null>(null);

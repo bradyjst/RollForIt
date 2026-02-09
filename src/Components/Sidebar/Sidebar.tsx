@@ -8,6 +8,7 @@ import {
 import type { D20Face } from "../../data/d20Faces";
 
 import "./Sidebar.css";
+import { useNavigate } from "react-router-dom";
 
 type SidebarProps = {
 	landedRoll: number | null;
@@ -52,6 +53,8 @@ export const Sidebar = ({
 		const saved = localStorage.getItem("customDice");
 		return saved ? JSON.parse(saved) : EMPTY_CUSTOM;
 	});
+
+	const navigate = useNavigate();
 
 	/** 🔒 prevents toast re-trigger on list switch */
 	const lastHandledRollRef = useRef<number | null>(null);
@@ -160,14 +163,39 @@ export const Sidebar = ({
 	return (
 		<aside className="sidebar">
 			<div className="list-buttons">
-				<button onClick={() => switchList(D20_FACES, "food")}>Food 🍔</button>
-				<button onClick={() => switchList(DATE_NIGHT_FACES, "date")}>
+				<button
+					onClick={() => {
+						switchList(D20_FACES, "food");
+						navigate("/what-should-i-eat");
+					}}
+				>
+					Food 🍔
+				</button>
+
+				<button
+					onClick={() => {
+						switchList(DATE_NIGHT_FACES, "date");
+						navigate("/date-ideas");
+					}}
+				>
 					Date ❤️
 				</button>
-				<button onClick={() => switchList(MOVIE_GENRE_FACES, "movies")}>
+
+				<button
+					onClick={() => {
+						switchList(MOVIE_GENRE_FACES, "movies");
+						navigate("/movie-night");
+					}}
+				>
 					Movies 🎬
 				</button>
-				<button onClick={() => switchList(customFaces, "custom")}>
+
+				<button
+					onClick={() => {
+						switchList(customFaces, "custom");
+						navigate("/custom-dice");
+					}}
+				>
 					Custom 🎲
 				</button>
 			</div>
