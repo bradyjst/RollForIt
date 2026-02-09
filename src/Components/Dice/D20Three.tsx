@@ -1,4 +1,6 @@
 import { useRef, useEffect, useMemo } from "react";
+import type { DiceTheme } from "./DiceTheme";
+import { DEFAULT_DICE_THEME } from "./DiceTheme";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 import * as THREE from "three";
@@ -8,6 +10,7 @@ type D20MeshProps = {
 	rolling: boolean;
 	value: number | null;
 	onLand?: () => void;
+	theme: DiceTheme;
 };
 
 type FaceInfo = {
@@ -106,17 +109,21 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 	return (
 		<mesh ref={mesh} geometry={geom} scale={1}>
 			<meshPhysicalMaterial
-				color="#0b0b0b"
-				roughness={0.35}
-				metalness={0.6}
-				clearcoat={1}
+				color={DEFAULT_DICE_THEME.bodyColor}
+				roughness={DEFAULT_DICE_THEME.roughness}
+				metalness={DEFAULT_DICE_THEME.metalness}
+				clearcoat={DEFAULT_DICE_THEME.clearcoat}
 				clearcoatRoughness={0.15}
 			/>
 
 			<group scale={1.01}>
 				<lineSegments>
 					<edgesGeometry args={[geom]} />
-					<lineBasicMaterial color="#ff2a2a" transparent opacity={0.4} />
+					<lineBasicMaterial
+						color={DEFAULT_DICE_THEME.edgeColor}
+						transparent
+						opacity={0.4}
+					/>
 				</lineSegments>
 			</group>
 
@@ -132,9 +139,9 @@ const D20Mesh = ({ rolling, value, onLand }: D20MeshProps) => {
 					>
 						<Text
 							fontSize={0.28}
-							color="#ff2a2a"
+							color={DEFAULT_DICE_THEME.textColor}
 							outlineWidth={0.02}
-							outlineColor="#ff2a2a"
+							outlineColor={DEFAULT_DICE_THEME.textColor}
 							anchorX="center"
 							anchorY="middle"
 						>
@@ -161,7 +168,12 @@ export const D20Three = ({ rolling, value, onLand }: D20ThreeProps) => {
 				<directionalLight position={[5, 5, 5]} intensity={1.2} />
 				<directionalLight position={[-3, -3, 2]} intensity={0.4} />
 
-				<D20Mesh rolling={rolling} value={value} onLand={onLand} />
+				<D20Mesh
+					theme={DEFAULT_DICE_THEME}
+					rolling={rolling}
+					value={value}
+					onLand={onLand}
+				/>
 			</Canvas>
 		</div>
 	);

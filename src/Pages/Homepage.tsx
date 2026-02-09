@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageHeader } from "../Components/PageHeader/PageHeader";
 import { Stats } from "../Components/Stats/Stats";
 import { Dice } from "../Components/Dice/Dice";
 import { Sidebar } from "../Components/Sidebar/Sidebar";
+import { DEFAULT_DICE_THEME } from "../Components/Dice/DiceTheme";
+import type { DiceTheme } from "../Components/Dice/DiceTheme";
 import Footer from "../Components/Footer/Footer";
 import "./Homepage.css";
+import { StyleEditor } from "../Components/StyleEditor/StyleEditor";
 
 export const Homepage = () => {
 	const [roll, setRoll] = useState<number | null>(null);
@@ -16,6 +19,28 @@ export const Homepage = () => {
 		label: string;
 		url: string;
 	} | null>(null);
+
+	const [diceTheme, setDiceTheme] = useState<DiceTheme>(() => {
+		const saved = localStorage.getItem("diceTheme");
+
+		if (saved) {
+			try {
+				const parsed = JSON.parse(saved);
+				return {
+					...DEFAULT_DICE_THEME,
+					...parsed, // fallback safety
+				};
+			} catch {
+				/* empty */
+			}
+		}
+
+		return DEFAULT_DICE_THEME;
+	});
+
+	useEffect(() => {
+		localStorage.setItem("diceTheme", JSON.stringify(diceTheme));
+	}, [diceTheme]);
 
 	function rollDice() {
 		if (rolling) return;
@@ -57,6 +82,8 @@ export const Homepage = () => {
 						setLandedRoll(null);
 					}}
 				/>
+
+				<StyleEditor theme={diceTheme} onChange={setDiceTheme} />
 			</div>
 
 			{/* ✅ STATIC PUBLISHER CONTENT (IMPORTANT FOR ADSENSE) */}
