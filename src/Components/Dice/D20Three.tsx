@@ -23,7 +23,7 @@ const D20Mesh = ({ rolling, value, onLand, theme }: D20MeshProps) => {
 	const targetQuat = useRef<THREE.Quaternion | null>(null);
 	const spinTime = useRef(0);
 
-	const SPIN_DURATION = 2.5;
+	const SPIN_DURATION = theme.rollTime;
 
 	// Geometry (built once)
 	const geom = useMemo(() => new THREE.IcosahedronGeometry(1.2, 0), []);

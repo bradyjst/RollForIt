@@ -1,48 +1,113 @@
-import { useState, useEffect } from "react";
+import {
+	FOOD_DICE_THEME,
+	DATE_DICE_THEME,
+	MOVIE_DICE_THEME,
+	CUSTOM_DICE_THEME,
+	type DiceTheme,
+} from "../Components/Dice/DiceTheme";
+import { useState, useEffect, useMemo } from "react";
 import { PageHeader } from "../Components/PageHeader/PageHeader";
 import { Stats } from "../Components/Stats/Stats";
 import { Dice } from "../Components/Dice/Dice";
 import { Sidebar } from "../Components/Sidebar/Sidebar";
-import { DEFAULT_DICE_THEME } from "../Components/Dice/DiceTheme";
-import type { DiceTheme } from "../Components/Dice/DiceTheme";
+import { HomePageExplainer } from "../Components/HomePageExplainer/HomePageExplainer";
+import { PAGE_META } from "../data/PageMeta";
+import { useParams } from "react-router-dom";
 import Footer from "../Components/Footer/Footer";
 import "./Homepage.css";
-import { StyleEditor } from "../Components/StyleEditor/StyleEditor";
+
+export type ListMode = "food" | "date" | "movies" | "custom";
 
 export const Homepage = () => {
+	const { diceSlug } = useParams();
+
+	/* 🎯 MODE — DERIVED FROM URL (NO STATE) */
+	const mode: ListMode = useMemo(() => {
+		switch (diceSlug) {
+			case "what-should-i-eat":
+				return "food";
+			case "date-ideas":
+				return "date";
+			case "movie-night":
+				return "movies";
+			case "custom-dice":
+				return "custom";
+			default:
+				return "food";
+		}
+	}, [diceSlug]);
+
+	/* 🎲 CORE ROLL STATE */
 	const [roll, setRoll] = useState<number | null>(null);
 	const [landedRoll, setLandedRoll] = useState<number | null>(null);
 	const [rolling, setRolling] = useState(false);
 	const [totalRolls, setTotalRolls] = useState(0);
-	const [showThemeEditor, setShowThemeEditor] = useState(false);
+
+	/* 🎨 UI STATE */
+	const [showEditor, setShowEditor] = useState(false);
 	const [toastText, setToastText] = useState<string | null>(null);
 	const [toastLink, setToastLink] = useState<{
 		label: string;
 		url: string;
 	} | null>(null);
 
-	const [diceTheme, setDiceTheme] = useState<DiceTheme>(() => {
-		const saved = localStorage.getItem("diceTheme");
-
-		if (saved) {
-			try {
-				const parsed = JSON.parse(saved);
-				return {
-					...DEFAULT_DICE_THEME,
-					...parsed, // fallback safety
-				};
-			} catch {
-				/* empty */
+	/* 🎨 THEMES BY MODE */
+	const [diceThemes, setDiceThemes] = useState<Record<ListMode, DiceTheme>>(
+		() => {
+			const saved = localStorage.getItem("diceThemes");
+			if (saved) {
+				try {
+					return JSON.parse(saved);
+				} catch {
+					/* empty */
+				}
 			}
+			return {
+				food: FOOD_DICE_THEME,
+				date: DATE_DICE_THEME,
+				movies: MOVIE_DICE_THEME,
+				custom: CUSTOM_DICE_THEME,
+			};
 		}
-
-		return DEFAULT_DICE_THEME;
-	});
+	);
 
 	useEffect(() => {
-		localStorage.setItem("diceTheme", JSON.stringify(diceTheme));
-	}, [diceTheme]);
+		localStorage.setItem("diceThemes", JSON.stringify(diceThemes));
+	}, [diceThemes]);
 
+	const activeTheme = diceThemes[mode];
+
+	/* 🔄 RESET */
+	const DEFAULT_THEMES_BY_MODE: Record<ListMode, DiceTheme> = {
+		food: FOOD_DICE_THEME,
+		date: DATE_DICE_THEME,
+		movies: MOVIE_DICE_THEME,
+		custom: CUSTOM_DICE_THEME,
+	};
+
+	const resetDiceTheme = () =>
+		setDiceThemes((prev) => ({
+			...prev,
+			[mode]: DEFAULT_THEMES_BY_MODE[mode],
+		}));
+
+	/* 🧠 SEO */
+	useEffect(() => {
+		const meta = PAGE_META[mode];
+		if (!meta) return;
+
+		document.title = meta.title;
+
+		const descTag = document.querySelector(
+			'meta[name="description"]'
+		) as HTMLMetaElement | null;
+
+		if (descTag) {
+			descTag.content = meta.description;
+		}
+	}, [mode]);
+
+	/* 🎲 ACTIONS */
 	function rollDice() {
 		if (rolling) return;
 		setRoll(Math.floor(Math.random() * 20) + 1);
@@ -58,8 +123,11 @@ export const Homepage = () => {
 	return (
 		<div className="homepage-container">
 			<PageHeader
-				title="Roll For It!"
-				subtitle="Decision paralysis? Let the dice help!"
+				title={PAGE_META[mode]?.title ?? "Roll For It!"}
+				subtitle={
+					PAGE_META[mode]?.description ??
+					"Decision paralysis? Let the dice help!"
+				}
 			/>
 
 			<Stats totalRolls={totalRolls} />
@@ -70,75 +138,35 @@ export const Homepage = () => {
 					rolling={rolling}
 					onRoll={rollDice}
 					onLand={handleDiceLand}
-					theme={diceTheme}
+					theme={activeTheme}
 				/>
 
 				<Sidebar
+					mode={mode}
+					activeTheme={activeTheme}
+					setActiveTheme={(nextTheme) =>
+						setDiceThemes((prev) => ({
+							...prev,
+							[mode]: nextTheme,
+						}))
+					}
+					resetTheme={resetDiceTheme}
 					landedRoll={landedRoll}
 					rollDice={rollDice}
+					showEditor={showEditor}
+					setShowEditor={setShowEditor}
 					onToastResult={setToastText}
 					onToastLink={setToastLink}
-					showEditor={showThemeEditor}
-					setShowEditor={setShowThemeEditor}
 					onListChange={() => {
 						setToastText(null);
 						setToastLink(null);
 						setLandedRoll(null);
 					}}
 				/>
-
-				{showThemeEditor && (
-					<StyleEditor theme={diceTheme} onChange={setDiceTheme} />
-				)}
 			</div>
 
-			{/* ✅ STATIC PUBLISHER CONTENT (IMPORTANT FOR ADSENSE) */}
-			<section className="homepage-explainer">
-				<h1>How the Dice Works</h1>
-
-				<p>
-					Roll For It uses true random number generation provided by your
-					browser. Every roll is independent, unbiased, and calculated in real
-					time.
-				</p>
-
-				<ol>
-					<li>You select or create a list of options</li>
-					<li>Each option is given equal probability</li>
-					<li>A random dice roll is generated when you press Roll</li>
-					<li>The roll is mapped directly to one option</li>
-				</ol>
-
-				<h2>How results are selected</h2>
-
-				<p>
-					When a roll occurs, Roll For It maps the dice value to your list using
-					a simple and fair mathematical formula called <strong>modulo</strong>.
-				</p>
-
-				<p>The formula used is:</p>
-
-				<pre className="code-block">{`index = (roll - 1) % numberOfOptions`}</pre>
-
-				<p>
-					Dice rolls are counted from 1, while lists are counted from 0.
-					Subtracting 1 aligns the two correctly. The modulo operation ensures
-					that if the dice roll is larger than the number of available options,
-					it safely wraps back around the list.
-				</p>
-
-				<p>
-					This guarantees that every option has an equal chance of being
-					selected, with no weighting, memory, or bias between rolls.
-				</p>
-
-				<h2>About animations</h2>
-
-				<p>
-					Animations are purely visual and do not influence the outcome. The
-					result is determined instantly when you roll, before any animation
-					finishes.
-				</p>
+			<section>
+				<HomePageExplainer />
 			</section>
 
 			<Footer />

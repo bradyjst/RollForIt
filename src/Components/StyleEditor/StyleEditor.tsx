@@ -4,9 +4,10 @@ import "./StyleEditor.css";
 type Props = {
 	theme: DiceTheme;
 	onChange: (next: DiceTheme) => void;
+	resetTheme: () => void;
 };
 
-export const StyleEditor = ({ theme, onChange }: Props) => {
+export const StyleEditor = ({ theme, onChange, resetTheme }: Props) => {
 	return (
 		<div className="dice-theme-editor">
 			<h3>Dice Appearance</h3>
@@ -71,6 +72,26 @@ export const StyleEditor = ({ theme, onChange }: Props) => {
 					}
 				/>
 			</div>
+
+			<div className="theme-number">
+				<label>Roll Time</label>
+				<input
+					type="number"
+					min={0}
+					max={5}
+					step={0.5}
+					value={theme.rollTime}
+					onChange={(e) =>
+						onChange({
+							...theme,
+							rollTime: Number(e.target.value),
+						})
+					}
+				/>
+			</div>
+			<button className="style-reset" onClick={resetTheme}>
+				Reset Theme
+			</button>
 		</div>
 	);
 };

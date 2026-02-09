@@ -9,6 +9,8 @@
 	color: #f5f5f5;
 }
 
+/* ---------- Header ---------- */
+
 .dice-theme-editor h3 {
 	margin: 0 0 12px 0;
 	font-size: 0.95rem;
@@ -18,34 +20,164 @@
 	color: #ff2a2a;
 }
 
+/* ---------- Row Base ---------- */
+
 .theme-row {
-	display: grid;
-	grid-template-columns: 1fr auto;
+	display: flex;
+	flex-direction: column;
 	align-items: center;
-	gap: 12px;
-	margin-bottom: 12px;
+	gap: 6px;
+	margin-bottom: 14px;
+	text-align: center;
 }
+
+/* ---------- Labels ---------- */
 
 .theme-row label {
 	font-size: 0.85rem;
 	opacity: 0.85;
+	line-height: 1.2;
 }
 
+/* ---------- Color Row ---------- */
+
+.theme-row.color {
+	flex-direction: row;
+	justify-content: center;
+	gap: 10px;
+}
+
+/* ---------- Color Input ---------- */
+
 .theme-row input[type="color"] {
-	width: 36px;
-	height: 24px;
+	width: 32px;
+	height: 22px;
 	padding: 0;
 	border: none;
 	background: none;
 	cursor: pointer;
 }
 
+/* ---------- Range Input ---------- */
+
 .theme-row input[type="range"] {
-	grid-column: span 2;
-	width: 100%;
+	width: 80%;
 	accent-color: #ff2a2a;
 }
 
+/* ---------- Numeric Value ---------- */
+
+.theme-value {
+	font-size: 0.75rem;
+	opacity: 0.65;
+	font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Hover Glow ---------- */
+
 .dice-theme-editor:hover {
 	box-shadow: 0 0 12px rgba(255, 42, 42, 0.25);
+}
+
+/* ---------- Reset Button ---------- */
+
+.style-reset {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+
+	padding: 10px 14px;
+	margin-top: 8px;
+
+	background: linear-gradient(
+		180deg,
+		rgba(255, 42, 42, 0.15),
+		rgba(255, 42, 42, 0.05)
+	);
+	border: 1px solid rgba(255, 42, 42, 0.4);
+	border-radius: 10px;
+
+	color: #ff2a2a;
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+
+	cursor: pointer;
+	transition: all 0.15s ease;
+}
+
+.style-reset:hover {
+	background: linear-gradient(
+		180deg,
+		rgba(255, 42, 42, 0.25),
+		rgba(255, 42, 42, 0.1)
+	);
+	box-shadow: 0 0 12px rgba(255, 42, 42, 0.35);
+	transform: translateY(-1px);
+}
+
+.style-reset:active {
+	transform: translateY(0);
+	box-shadow: 0 0 6px rgba(255, 42, 42, 0.25);
+}
+
+.style-reset:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(255, 42, 42, 0.5);
+}
+
+.theme-number {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 14px;
+	text-align: center;
+}
+
+.theme-number label {
+	font-size: 0.85rem;
+	opacity: 0.85;
+	line-height: 1.2;
+}
+
+.theme-number input[type="number"] {
+	width: 72px;
+	padding: 6px 8px;
+
+	background: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 42, 42, 0.35);
+	border-radius: 8px;
+
+	color: #f5f5f5;
+	font-size: 0.85rem;
+	text-align: center;
+	font-variant-numeric: tabular-nums;
+
+	/* ✅ Standard + vendor compatibility */
+	appearance: textfield;
+	-webkit-appearance: none;
+	-moz-appearance: textfield;
+
+	outline: none;
+	transition: all 0.15s ease;
+}
+
+/* Hover / focus polish */
+.theme-number input[type="number"]:hover {
+	border-color: rgba(255, 42, 42, 0.6);
+}
+
+.theme-number input[type="number"]:focus {
+	border-color: #ff2a2a;
+	box-shadow: 0 0 0 2px rgba(255, 42, 42, 0.35);
+}
+
+/* Remove browser steppers (WebKit) */
+.theme-number input[type="number"]::-webkit-outer-spin-button,
+.theme-number input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
