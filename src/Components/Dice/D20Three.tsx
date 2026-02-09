@@ -10,6 +10,7 @@ type D20MeshProps = {
 	value: number | null;
 	onLand?: () => void;
 	theme: DiceTheme;
+	preview?: boolean;
 };
 
 type FaceInfo = {
@@ -18,7 +19,13 @@ type FaceInfo = {
 	quat: THREE.Quaternion;
 };
 
-const D20Mesh = ({ rolling, value, onLand, theme }: D20MeshProps) => {
+export const D20Mesh = ({
+	rolling,
+	value,
+	onLand,
+	theme,
+	preview,
+}: D20MeshProps) => {
 	const mesh = useRef<THREE.Mesh>(null!);
 	const targetQuat = useRef<THREE.Quaternion | null>(null);
 	const spinTime = useRef(0);
@@ -67,6 +74,12 @@ const D20Mesh = ({ rolling, value, onLand, theme }: D20MeshProps) => {
 	// Animation loop
 	useFrame((_, delta) => {
 		if (!mesh.current) return;
+
+		if (preview) {
+			mesh.current.rotation.y += delta * 0.4;
+			mesh.current.rotation.x += delta * 0.15;
+			return;
+		}
 
 		// Phase 1: spinning
 		if (rolling && spinTime.current < SPIN_DURATION) {

@@ -1,3 +1,4 @@
+import { DicePreview } from "../Dice/DicePreview";
 import type { DiceTheme } from "../Dice/DiceTheme";
 import "./StyleEditor.css";
 
@@ -89,6 +90,7 @@ export const StyleEditor = ({ theme, onChange, resetTheme }: Props) => {
 					}
 				/>
 			</div>
+			<DicePreview theme={theme} />
 			<button className="style-reset" onClick={resetTheme}>
 				Reset Theme
 			</button>
