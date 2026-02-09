@@ -18,7 +18,7 @@ export const PAGE_META: Record<
 			"Stuck on date ideas? Roll the dice and get inspired instantly.",
 	},
 	movies: {
-		title: "What Movie Should I Watch? 🎬 | Roll For It",
+		title: "What Should I Watch? 🎬 | Roll For It",
 		description:
 			"Let the dice pick your next movie night genre for you.",
 	},
