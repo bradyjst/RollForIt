@@ -1,20 +1,50 @@
 :root {
+	/* Brand accents */
+	--accent: #7b6cff; /* neon purple */
+	--accent-soft: #4cc9f0; /* neon cyan */
+
+	/* Semantic helpers */
+	--success: #4ade80;
+	--warning: #facc15;
+	--danger: #f87171;
+
+	/* Layout helpers */
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 14px;
+}
+
+:root,
+[data-theme="dark"] {
 	/* Backgrounds */
 	--bg: #0b0f1a; /* deep midnight */
 	--surface: #151a2e; /* dark indigo */
-	--surface-hover: #1f2450; /* hover glow base */
+	--surface-hover: #1f2450;
 
 	/* Text */
 	--text-primary: #eaf0ff;
 	--text-secondary: #b3baf5;
 	--text-muted: #7a83c9;
 
-	/* Accent */
-	--accent: #7b6cff; /* neon purple */
-	--accent-soft: #4cc9f0; /* neon cyan */
+	--danger: #ff2a2a;
 
 	/* Borders */
 	--border: #2a2f6f;
+}
+
+[data-theme="light"] {
+	/* Backgrounds */
+	--bg: #f2f3fa; /* soft lavender paper */
+	--surface: #f8f9ff; /* card surface (not white) */
+	--surface-hover: #eef0ff; /* subtle lift */
+
+	/* Text */
+	--text-primary: #121426; /* soft near-black */
+	--text-secondary: #4a4f9c;
+	--text-muted: #7a7fb8;
+
+	/* Borders */
+	--border: #d3d6f0;
 }
 
 html,

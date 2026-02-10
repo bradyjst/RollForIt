@@ -4,6 +4,8 @@
 	gap: 6px;
 }
 
+/* ---------- Face row ---------- */
+
 .face {
 	display: flex;
 	position: relative;
@@ -11,8 +13,10 @@
 	gap: 10px;
 	padding: 2px;
 	border-radius: 8px;
-	background: #1b1b28;
+
+	background: var(--surface);
 	cursor: default;
+
 	transition: background 0.15s ease, transform 0.1s ease;
 }
 
@@ -21,64 +25,88 @@
 }
 
 .face:hover {
-	background: #232338;
+	background: var(--surface-hover);
 }
 
+/* Active face */
 .face.active {
-	background: #2a2a44;
-	box-shadow: inset 0 0 0 1px rgba(255, 42, 42, 0.4);
+	background: color-mix(in srgb, var(--surface-hover) 80%, transparent);
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--danger) 40%, transparent);
 }
+
+/* ---------- Face number ---------- */
 
 .face-number {
 	min-width: 22px;
 	height: 22px;
 	border-radius: 6px;
-	background: #2f2f45;
+
+	background: color-mix(in srgb, var(--surface-hover) 70%, transparent);
+
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
 	font-size: 12px;
 	font-weight: 700;
-	color: #aaa;
+	color: var(--text-muted);
 	flex-shrink: 0;
 }
+
+/* ---------- Face text ---------- */
 
 .face-text {
 	flex: 1;
 	font-size: 14px;
-	color: #eaeaea;
+	color: var(--text-primary);
+
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
 .face-text.blank {
-	color: #777;
+	color: var(--text-muted);
 	font-style: italic;
 }
 
+/* ---------- Editable input ---------- */
+
 .face input {
 	flex: 1;
-	background: #101018;
-	border: none;
+
+	background: var(--surface-hover);
+	border: 1px solid var(--border);
 	border-radius: 6px;
+
 	padding: 6px 8px;
-	color: white;
+	color: var(--text-primary);
 	font-size: 14px;
+
 	outline: none;
 }
+
+.face input:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* ---------- Near-me link ---------- */
 
 .near-me {
 	position: absolute;
 	right: 8px;
 	top: 50%;
 	transform: translateY(-50%);
+
 	font-size: 12px;
 	text-decoration: none;
+
 	opacity: 0;
 	pointer-events: none;
 	transition: opacity 0.15s ease;
-	color: #aaa;
+
+	color: var(--text-muted);
 }
 
 .face.active .near-me {
@@ -88,8 +116,10 @@
 
 .near-me:hover {
 	opacity: 1;
-	color: #fff;
+	color: var(--text-primary);
 }
+
+/* ---------- Carousel wrapper ---------- */
 
 .faces-carousel {
 	overflow: hidden;

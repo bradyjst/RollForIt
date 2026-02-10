@@ -8,10 +8,9 @@ export type DiceTheme = {
 	rollTime: number;
 };
 
-/* 🍔 FOOD — warm, playful, slightly matte */
 export const FOOD_DICE_THEME: DiceTheme = {
-	bodyColor: "#f5e6c8", // warm cream
-	edgeColor: "#ff6b35", // food-orange
+	bodyColor: "#f5e6c8",
+	edgeColor: "#ff6b35",
 	textColor: "#2b2b2b",
 	metalness: 0.15,
 	roughness: 0.85,
@@ -19,7 +18,6 @@ export const FOOD_DICE_THEME: DiceTheme = {
 	rollTime: 2.3,
 };
 
-/* ❤️ DATE — glossy, romantic, premium */
 export const DATE_DICE_THEME: DiceTheme = {
 	bodyColor: "#0b0b0b",
 	edgeColor: "#ff2a2a",
@@ -30,10 +28,9 @@ export const DATE_DICE_THEME: DiceTheme = {
 	rollTime: 2.5,
 };
 
-/* 🎬 MOVIES — cinematic, dark, high contrast */
 export const MOVIE_DICE_THEME: DiceTheme = {
-	bodyColor: "#0e0e11", // near-black
-	edgeColor: "#4cc9f0", // neon blue
+	bodyColor: "#0e0e11",
+	edgeColor: "#4cc9f0",
 	textColor: "#e5e5e5",
 	metalness: 0.8,
 	roughness: 0.35,
@@ -41,9 +38,8 @@ export const MOVIE_DICE_THEME: DiceTheme = {
 	rollTime: 2.8,
 };
 
-/* 🎲 CUSTOM — neutral, mod-friendly baseline */
 export const CUSTOM_DICE_THEME: DiceTheme = {
-	bodyColor: "#f0f0f0", // clean neutral
+	bodyColor: "#f0f0f0",
 	edgeColor: "#7c7c7c",
 	textColor: "#1f1f1f",
 	metalness: 0.4,

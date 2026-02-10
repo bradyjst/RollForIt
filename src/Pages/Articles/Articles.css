@@ -1,0 +1,142 @@
+/* =========================================================
+   Base Article Layout
+   Use for all informational / explainer pages
+   ========================================================= */
+
+.article {
+	max-width: 840px;
+	margin: 0 auto;
+	padding: 2.75rem 1.25rem;
+	line-height: 1.65;
+	color: var(--text-primary);
+}
+
+/* ---------- Headings ---------- */
+
+.article h1 {
+	font-size: 2.1rem;
+	margin-bottom: 0.75rem;
+	color: var(--text-primary);
+}
+
+.article h2 {
+	font-size: 1.4rem;
+	margin-top: 2.25rem;
+	margin-bottom: 0.5rem;
+	color: var(--text-primary);
+}
+
+.article h3 {
+	font-size: 1.15rem;
+	margin-top: 1.5rem;
+	margin-bottom: 0.4rem;
+	color: var(--text-secondary);
+}
+
+/* ---------- Intro / subtitle ---------- */
+
+.article-intro {
+	font-size: 1.05rem;
+	color: var(--text-secondary);
+	margin-bottom: 2rem;
+}
+
+/* ---------- Paragraphs ---------- */
+
+.article p {
+	margin-bottom: 0.85rem;
+	color: var(--text-primary);
+}
+
+/* ---------- Lists ---------- */
+
+.article ul,
+.article ol {
+	padding-left: 1.25rem;
+	margin: 0.75rem 0;
+}
+
+.article li {
+	margin-bottom: 0.4rem;
+	color: var(--text-primary);
+}
+
+/* ---------- Callouts ---------- */
+
+.article-callout {
+	margin: 1.5rem 0;
+	padding: 1rem 1.25rem;
+	border-left: 4px solid var(--border);
+	background: var(--surface);
+	border-radius: var(--radius-md);
+}
+
+.article-callout p {
+	margin: 0;
+	color: var(--text-primary);
+}
+
+/* ---------- Quotes / emphasis ---------- */
+
+.article-quote {
+	margin: 1.5rem 0;
+	padding-left: 1rem;
+	border-left: 3px solid var(--border);
+	font-style: italic;
+	color: var(--text-secondary);
+}
+
+/* ---------- Images ---------- */
+
+.article-image {
+	margin: 1.75rem 0;
+	display: flex;
+	justify-content: center;
+}
+
+.article-image img {
+	max-width: 100%;
+	height: auto;
+	border-radius: var(--radius-md);
+}
+
+/* ---------- Footer / sources ---------- */
+
+.article-footer {
+	margin-top: 3rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid var(--border);
+}
+
+.article-source {
+	font-size: 0.85rem;
+	color: var(--text-muted);
+}
+
+/* ---------- Links ---------- */
+
+.article a {
+	color: var(--accent);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.article a:hover {
+	color: var(--accent-soft);
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 600px) {
+	.article {
+		padding: 2.25rem 1rem;
+	}
+
+	.article h1 {
+		font-size: 1.8rem;
+	}
+
+	.article h2 {
+		font-size: 1.25rem;
+	}
+}

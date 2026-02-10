@@ -1,22 +1,83 @@
 .page-header {
 	width: 100%;
-	padding: 0;
-	text-align: center;
+	margin-bottom: 1.5rem;
 }
+
+/* ─────────────────────────────
+   Page title container
+   ───────────────────────────── */
 
 .page-header-container {
 	max-width: 900px;
 	margin: 0 auto;
+	padding: 1.25rem 1.5rem 0.75rem;
+}
+
+/* Title + toggle row */
+
+.page-header-title-row {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+	width: 100%;
+}
+
+/* Centered title */
+
+.page-header-title-row h1 {
+	grid-column: 2;
+	text-align: center;
+
+	font-size: clamp(2.2rem, 4vw, 3rem);
+	margin: 0;
+	color: var(--text-primary);
+}
+
+/* Subtitle */
+
+.page-header-container p {
+	margin-top: 0.75rem;
+	font-size: 1.05rem;
+	color: var(--text-secondary);
 	text-align: center;
 }
 
-.page-header-container h1 {
-	font-size: clamp(2.2rem, 4vw, 3rem);
-	margin-bottom: 1rem;
-	color: var(--surface #151521);
+/* ─────────────────────────────
+   Theme toggle button
+   ───────────────────────────── */
+
+.theme-toggle {
+	grid-column: 3;
+	justify-self: end;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 6px 10px;
+	border-radius: 999px;
+
+	background: var(--surface);
+	border: 1px solid var(--border);
+
+	font-size: 14px;
+	cursor: pointer;
+	color: var(--text-muted);
+
+	transition: background 0.15s ease, border-color 0.15s ease,
+		transform 0.1s ease;
 }
 
-.page-header-container p {
-	font-size: 1.1rem;
-	color: #555;
+.theme-toggle:hover {
+	background: var(--surface-hover);
+	color: var(--text-primary);
+}
+
+.theme-toggle:active {
+	transform: scale(0.95);
+}
+
+.theme-toggle:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 40%, transparent);
 }

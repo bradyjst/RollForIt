@@ -13,6 +13,8 @@ import { Sidebar } from "../Components/Sidebar/Sidebar";
 import { HomePageExplainer } from "../Components/HomePageExplainer/HomePageExplainer";
 import { PAGE_META } from "../data/PageMeta";
 import { useParams } from "react-router-dom";
+import { InstallAppGuide } from "../Components/InstallAppGuide/InstallAppGuide";
+import { WhyDiceWorksArticle } from "../Components/WhyItWorks/WhyItWorks";
 import Footer from "../Components/Footer/Footer";
 import "./Homepage.css";
 
@@ -41,7 +43,16 @@ export const Homepage = () => {
 	const [roll, setRoll] = useState<number | null>(null);
 	const [landedRoll, setLandedRoll] = useState<number | null>(null);
 	const [rolling, setRolling] = useState(false);
-	const [totalRolls, setTotalRolls] = useState(0);
+	const TOTAL_ROLLS_KEY = "rollforit_total_rolls";
+
+	const [totalRolls, setTotalRolls] = useState<number>(() => {
+		const saved = localStorage.getItem(TOTAL_ROLLS_KEY);
+		return saved ? Number(saved) : 0;
+	});
+
+	useEffect(() => {
+		localStorage.setItem(TOTAL_ROLLS_KEY, String(totalRolls));
+	}, [totalRolls]);
 
 	/* 🎨 UI STATE */
 	const [showEditor, setShowEditor] = useState(false);
@@ -167,6 +178,8 @@ export const Homepage = () => {
 
 			<section>
 				<HomePageExplainer />
+				<InstallAppGuide />
+				<WhyDiceWorksArticle />
 			</section>
 
 			<Footer />

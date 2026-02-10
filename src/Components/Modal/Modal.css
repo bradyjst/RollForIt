@@ -1,33 +1,53 @@
 .modal-backdrop {
 	position: fixed;
 	inset: 0;
+
+	/* Backdrop should stay dark in both themes */
 	background: rgba(0, 0, 0, 0.6);
+
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	z-index: 1000;
 }
 
+/* Modal container */
 .modal {
-	background: #111;
+	background: var(--surface);
+	color: var(--text-primary);
+
 	padding: 16px;
-	border-radius: 8px;
+	border-radius: var(--radius-md);
 	width: 320px;
 	max-height: 80vh;
 	overflow-y: auto;
+
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
+
+	border: 1px solid var(--border);
 }
 
+/* Inputs */
 .modal input {
-	background: #222;
-	color: white;
-	border: none;
+	background: var(--surface-hover);
+	color: var(--text-primary);
+
+	border: 1px solid var(--border);
 	padding: 6px;
-	border-radius: 4px;
+	border-radius: var(--radius-sm);
+
+	outline: none;
 }
 
+/* Focus polish */
+.modal input:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* Actions */
 .modal-actions {
 	display: flex;
 	justify-content: space-between;

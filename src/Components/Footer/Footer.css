@@ -1,9 +1,12 @@
 .site-footer {
 	margin-top: 4rem;
 	padding: 2rem 1.5rem;
-	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	border-top: 1px solid var(--border);
 	text-align: center;
+	color: var(--text-muted);
 }
+
+/* ---------- Primary links ---------- */
 
 .footer-links {
 	display: flex;
@@ -14,16 +17,46 @@
 }
 
 .footer-links a {
-	color: #cfcfcf;
+	color: var(--text-secondary);
 	text-decoration: none;
 	font-size: 0.95rem;
 }
 
 .footer-links a:hover {
+	color: var(--text-primary);
 	text-decoration: underline;
 }
 
+/* ---------- Articles section ---------- */
+
+.footer-articles {
+	margin: 1.5rem 0;
+	display: flex;
+	justify-content: center;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+	font-size: 0.9rem;
+}
+
+.footer-articles a {
+	color: var(--accent);
+	margin: 0 1.5rem;
+	text-decoration: none;
+}
+
+.footer-articles a:hover {
+	color: var(--accent-soft);
+	text-decoration: underline;
+}
+
+.footer-label {
+	color: var(--text-muted);
+	margin-right: 0.25rem;
+}
+
+/* ---------- Copyright ---------- */
+
 .footer-copy {
 	font-size: 0.85rem;
-	color: #9a9a9a;
+	color: var(--text-muted);
 }

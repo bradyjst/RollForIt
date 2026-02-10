@@ -3,6 +3,8 @@
 	display: flex;
 	flex-direction: column;
 	overflow-y: auto;
+	background: var(--bg);
+	color: var(--text-primary);
 }
 
 .homepage-content {
@@ -12,17 +14,28 @@
 	align-items: center;
 }
 
+/* =============================
+   Toast backdrop
+   ============================= */
+
 .toast-backdrop {
 	position: fixed;
 	inset: 0;
+
+	/* Intentionally dark in both themes */
 	background: rgba(0, 0, 0, 0.45);
 	backdrop-filter: blur(2px);
+
 	z-index: 9999;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	pointer-events: all;
 }
+
+/* =============================
+   Toast container
+   ============================= */
 
 .toast {
 	position: fixed;
@@ -34,32 +47,37 @@
 	text-align: center;
 }
 
+/* Link inside toast (external result) */
 .toast-link {
 	display: inline-block;
 	margin: 12px 0;
-	color: #ff6b6b;
+	color: var(--accent);
 	font-weight: 600;
 	text-decoration: none;
 }
 
 .toast-link:hover {
-	text-decoration: none;
-	color: #ff6b6b;
+	color: var(--accent-soft);
+	text-decoration: underline;
 }
 
+/* Toast card */
 .toast-card {
-	background: #151521;
-	border: 1px solid #26263a;
-	border-radius: 14px;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+
 	padding: 16px 20px;
 	min-width: 240px;
 	text-align: center;
+
 	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
+/* Toast text */
 .toast-title {
 	font-size: 13px;
-	opacity: 0.7;
+	color: var(--text-muted);
 	margin-bottom: 6px;
 }
 
@@ -67,8 +85,10 @@
 	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 12px;
+	color: var(--text-primary);
 }
 
+/* Actions */
 .toast-actions {
 	display: flex;
 	gap: 10px;
@@ -76,18 +96,25 @@
 }
 
 .toast-actions button {
-	background: #1f1f35;
-	border: 1px solid #2a2a44;
-	border-radius: 10px;
+	background: var(--surface-hover);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+
 	padding: 8px 14px;
-	color: #fff;
+	color: var(--text-primary);
 	font-weight: 600;
 	cursor: pointer;
+
+	transition: background 0.15s ease;
 }
 
 .toast-actions button:hover {
-	background: #2a2a44;
+	background: color-mix(in srgb, var(--surface-hover) 80%, transparent);
 }
+
+/* =============================
+   Responsive homepage layout
+   ============================= */
 
 @media (max-width: 1200px) {
 	.homepage-content {
@@ -97,29 +124,34 @@
 	}
 }
 
-/* CSS for all pages that arent the home page */
+/* =============================
+   Generic page layout
+   ============================= */
 
 .page-container {
 	max-width: 800px;
 	margin: 0 auto;
 	padding: 3rem 1.5rem;
 	line-height: 1.7;
+	color: var(--text-primary);
 }
 
 .page-container h1 {
 	font-size: 2.2rem;
 	margin-bottom: 1.5rem;
+	color: var(--text-primary);
 }
 
 .page-container h2 {
 	margin-top: 2rem;
 	margin-bottom: 0.75rem;
 	font-size: 1.3rem;
+	color: var(--text-primary);
 }
 
 .page-container p {
 	margin-bottom: 1.2rem;
-	color: #e5e5e5;
+	color: var(--text-secondary);
 }
 
 .page-container ul,
@@ -130,37 +162,48 @@
 
 .page-container li {
 	margin-bottom: 0.5rem;
+	color: var(--text-primary);
 }
 
 .contact-email {
 	font-weight: bold;
 	font-size: 1.1rem;
+	color: var(--text-primary);
 }
 
+/* Code blocks */
 .code-block {
-	background: #151521;
-	border: 1px solid #26263a;
-	border-radius: 10px;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-md);
+
 	padding: 12px 16px;
 	margin: 1rem 0 1.5rem;
+
 	font-family: monospace;
 	font-size: 14px;
-	color: #eaeaea;
+	color: var(--text-primary);
 	overflow-x: auto;
 }
+
+/* =============================
+   Homepage explainer
+   ============================= */
 
 .homepage-explainer {
 	max-width: 900px;
 	margin: 2rem auto 3rem;
 	padding: 0 1.5rem;
 	line-height: 1.7;
+	color: var(--text-primary);
 }
 
 .homepage-explainer h2 {
 	margin-bottom: 0.75rem;
+	color: var(--text-primary);
 }
 
 .homepage-explainer p {
 	margin-bottom: 1rem;
-	color: #e5e5e5;
+	color: var(--text-secondary);
 }

@@ -8,12 +8,12 @@ export const PAGE_META: Record<
 	}
 > = {
 	food: {
-		title: "What Should I Eat Tonight? 🎲 | Roll For It",
+		title: "What Should I Eat Tonight? Roll For It",
 		description:
 			"Can't decide what to eat? Roll the dice and let chance choose your next meal.",
 	},
 	date: {
-		title: "Date Night Ideas ❤️ | Roll For It",
+		title: "Date Night Ideas ❤️  Roll For It",
 		description:
 			"Stuck on date ideas? Roll the dice and get inspired instantly.",
 	},

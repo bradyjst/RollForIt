@@ -80,7 +80,7 @@ export const StyleEditor = ({ theme, onChange, resetTheme }: Props) => {
 				<input
 					type="number"
 					min={0}
-					max={5}
+					max={10}
 					step={0.5}
 					value={theme.rollTime}
 					onChange={(e) =>

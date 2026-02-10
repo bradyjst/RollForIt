@@ -1,12 +1,12 @@
 .dice-theme-editor {
-	background: rgba(10, 10, 10, 0.75);
-	border: 1px solid rgba(255, 42, 42, 0.25);
-	border-radius: 12px;
+	background: color-mix(in srgb, var(--surface) 75%, transparent);
+	border: 1px solid color-mix(in srgb, var(--danger) 35%, transparent);
+	border-radius: var(--radius-lg);
 	padding: 16px;
 	margin-top: 16px;
 
 	font-family: system-ui, sans-serif;
-	color: #f5f5f5;
+	color: var(--text-primary);
 }
 
 /* ---------- Header ---------- */
@@ -17,7 +17,7 @@
 	font-weight: 600;
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
-	color: #ff2a2a;
+	color: var(--danger);
 }
 
 /* ---------- Row Base ---------- */
@@ -35,7 +35,7 @@
 
 .theme-row label {
 	font-size: 0.85rem;
-	opacity: 0.85;
+	color: var(--text-secondary);
 	line-height: 1.2;
 }
 
@@ -62,21 +62,21 @@
 
 .theme-row input[type="range"] {
 	width: 80%;
-	accent-color: #ff2a2a;
+	accent-color: var(--danger);
 }
 
 /* ---------- Numeric Value ---------- */
 
 .theme-value {
 	font-size: 0.75rem;
-	opacity: 0.65;
+	color: var(--text-muted);
 	font-variant-numeric: tabular-nums;
 }
 
 /* ---------- Hover Glow ---------- */
 
 .dice-theme-editor:hover {
-	box-shadow: 0 0 12px rgba(255, 42, 42, 0.25);
+	box-shadow: 0 0 12px color-mix(in srgb, var(--danger) 25%, transparent);
 }
 
 /* ---------- Reset Button ---------- */
@@ -92,13 +92,13 @@
 
 	background: linear-gradient(
 		180deg,
-		rgba(255, 42, 42, 0.15),
-		rgba(255, 42, 42, 0.05)
+		color-mix(in srgb, var(--danger) 15%, transparent),
+		color-mix(in srgb, var(--danger) 5%, transparent)
 	);
-	border: 1px solid rgba(255, 42, 42, 0.4);
-	border-radius: 10px;
+	border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
+	border-radius: var(--radius-md);
 
-	color: #ff2a2a;
+	color: var(--danger);
 	font-size: 0.85rem;
 	font-weight: 600;
 	letter-spacing: 0.04em;
@@ -111,22 +111,24 @@
 .style-reset:hover {
 	background: linear-gradient(
 		180deg,
-		rgba(255, 42, 42, 0.25),
-		rgba(255, 42, 42, 0.1)
+		color-mix(in srgb, var(--danger) 25%, transparent),
+		color-mix(in srgb, var(--danger) 10%, transparent)
 	);
-	box-shadow: 0 0 12px rgba(255, 42, 42, 0.35);
+	box-shadow: 0 0 12px color-mix(in srgb, var(--danger) 35%, transparent);
 	transform: translateY(-1px);
 }
 
 .style-reset:active {
 	transform: translateY(0);
-	box-shadow: 0 0 6px rgba(255, 42, 42, 0.25);
+	box-shadow: 0 0 6px color-mix(in srgb, var(--danger) 25%, transparent);
 }
 
 .style-reset:focus-visible {
 	outline: none;
-	box-shadow: 0 0 0 2px rgba(255, 42, 42, 0.5);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--danger) 50%, transparent);
 }
+
+/* ---------- Number Input ---------- */
 
 .theme-number {
 	display: flex;
@@ -139,7 +141,7 @@
 
 .theme-number label {
 	font-size: 0.85rem;
-	opacity: 0.85;
+	color: var(--text-secondary);
 	line-height: 1.2;
 }
 
@@ -147,16 +149,15 @@
 	width: 72px;
 	padding: 6px 8px;
 
-	background: rgba(255, 255, 255, 0.05);
-	border: 1px solid rgba(255, 42, 42, 0.35);
-	border-radius: 8px;
+	background: var(--surface);
+	border: 1px solid color-mix(in srgb, var(--danger) 35%, transparent);
+	border-radius: var(--radius-sm);
 
-	color: #f5f5f5;
+	color: var(--text-primary);
 	font-size: 0.85rem;
 	text-align: center;
 	font-variant-numeric: tabular-nums;
 
-	/* ✅ Standard + vendor compatibility */
 	appearance: textfield;
 	-webkit-appearance: none;
 	-moz-appearance: textfield;
@@ -167,12 +168,12 @@
 
 /* Hover / focus polish */
 .theme-number input[type="number"]:hover {
-	border-color: rgba(255, 42, 42, 0.6);
+	border-color: color-mix(in srgb, var(--danger) 60%, transparent);
 }
 
 .theme-number input[type="number"]:focus {
-	border-color: #ff2a2a;
-	box-shadow: 0 0 0 2px rgba(255, 42, 42, 0.35);
+	border-color: var(--danger);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--danger) 35%, transparent);
 }
 
 /* Remove browser steppers (WebKit) */
