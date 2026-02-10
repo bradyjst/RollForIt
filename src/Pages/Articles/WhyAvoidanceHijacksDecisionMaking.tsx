@@ -114,18 +114,17 @@ export function AvoidanceAndDecisionMakingArticle() {
 
 				<footer className="article-footer">
 					<p className="article-source">
-						Source: Beckers T, Craske MG.{" "}
-						<em>
-							Avoidance and Decision Making in Anxiety: An Introduction to the
-							Special Issue
-						</em>
-						. Behaviour Research and Therapy. 2017.
 						<a
 							href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5551966/"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							https://pmc.ncbi.nlm.nih.gov/articles/PMC5551966/
+							Source: Beckers T, Craske MG.{" "}
+							<em>
+								Avoidance and Decision Making in Anxiety: An Introduction to the
+								Special Issue
+							</em>
+							. Behaviour Research and Therapy. 2017.
 						</a>
 					</p>
 				</footer>
