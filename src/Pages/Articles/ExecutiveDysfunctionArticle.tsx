@@ -121,9 +121,11 @@ export function ExecutiveDysfunctionArticle() {
 
 				<footer className="article-footer">
 					<p className="article-source">
-						Source: Rabinovici GD, Stephens ML, Possin KL.{" "}
-						<em>Executive Dysfunction</em>. Continuum (Minneap Minn). 2015.
-						PMCID: PMC4455841.
+						<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4455841/">
+							Source: Rabinovici GD, Stephens ML, Possin KL.{" "}
+							<em>Executive Dysfunction</em>. Continuum (Minneap Minn). 2015.
+							PMCID: PMC4455841.
+						</a>
 					</p>
 				</footer>
 				<Link to={"/what-should-i-eat"}>← Back to Home</Link>
