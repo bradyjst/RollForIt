@@ -12,6 +12,7 @@ export const StyleEditor = ({ theme, onChange, resetTheme }: Props) => {
 	return (
 		<div className="dice-theme-editor">
 			<h3>Dice Appearance</h3>
+			<DicePreview theme={theme} />
 
 			<div className="theme-row">
 				<label>Body</label>
@@ -90,7 +91,6 @@ export const StyleEditor = ({ theme, onChange, resetTheme }: Props) => {
 					}
 				/>
 			</div>
-			<DicePreview theme={theme} />
 			<button className="style-reset" onClick={resetTheme}>
 				Reset Theme
 			</button>
